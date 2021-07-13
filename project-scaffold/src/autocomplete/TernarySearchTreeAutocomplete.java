@@ -20,6 +20,39 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
     public TernarySearchTreeAutocomplete() {
         overallRoot = null;
     }
+    // addALL():
+    // build a TST recursively adding words
+    // this is essentially going over steps we did on the TST lesson in class
+    // Action items:
+    // read TST class documentation
+    // Public/Private method paring it seems like
+    // Questions:
+    // What check are we going to need to make to add words to the same branch
+    // how do we break out of our recursion? What check will that take
+    // list [4,6,2,8]
+    // Overall root: 4
+    // check < or >
+    // most likely we will pass in the currentroot to the private method as a VAR
+    // Recursive step:
+    // go one word at a time
+    // do this by using substrings
+    // if list[i] < currentletter
+    // Left
+    // else if list[i] = currentletter
+    // go straight down
+    // node.mid (goes straight down)
+    // else list[i] > currentRoot
+    // Right
+    // node.right
+    // when do you stop for a given word?
+    // probably at the end of a charsequenec
+    // public
+    // for (char c : words){
+    // run recursion
+    // run associated TST add method from the example code
+    // method that traverses TsT
+    // }
+    // till out of letters in the words of term
 
     @Override
     public void addAll(Collection<? extends CharSequence> terms) {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Dylan project-scaffold/Dylan project-scaffold.iml" filepath="$PROJECT_DIR$/Dylan project-scaffold/Dylan project-scaffold.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Dylan project-scaffold/src/Dylan project-scaffold1.iml" filepath="$PROJECT_DIR$/Dylan project-scaffold/src/Dylan project-scaffold1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/autocomplete.iml" filepath="$PROJECT_DIR$/.idea/autocomplete.iml" />
+      <module fileurl="file://$PROJECT_DIR$/project-scaffold/project-scaffold.iml" filepath="$PROJECT_DIR$/project-scaffold/project-scaffold.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Dylan project-scaffold/project-scaffold/project-scaffold1.iml" filepath="$PROJECT_DIR$/Dylan project-scaffold/project-scaffold/project-scaffold1.iml" />
+    </modules>
+  </component>
+</project>

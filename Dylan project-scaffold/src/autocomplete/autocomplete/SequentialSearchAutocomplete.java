@@ -37,7 +37,8 @@ public class SequentialSearchAutocomplete implements Autocomplete {
             terms.add(c);
         }
         // debugging to make sure everything gets added
-        // System.out.println(terms.toString());
+        System.out.print("hey!");
+//        System.out.println(terms.toString());
     }
 
     @Override
