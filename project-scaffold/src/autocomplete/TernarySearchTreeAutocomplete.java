@@ -1,7 +1,11 @@
 package autocomplete;
 
+
+import javax.swing.plaf.synth.SynthUI;
 import java.util.Collection;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Ternary search tree (TST) implementation of the {@link Autocomplete} interface.
@@ -13,59 +17,6 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
      * The overall root of the tree: the first character of the first autocompletion term added to this tree.
      */
     private Node overallRoot;
-
-    /**
-     * Constructs an empty instance.
-     */
-    public TernarySearchTreeAutocomplete() {
-        overallRoot = null;
-    }
-    // addALL():
-    // build a TST recursively adding words
-    // this is essentially going over steps we did on the TST lesson in class
-    // Action items:
-    // read TST class documentation
-    // Public/Private method paring it seems like
-    // Questions:
-    // What check are we going to need to make to add words to the same branch
-    // how do we break out of our recursion? What check will that take
-    // list [4,6,2,8]
-    // Overall root: 4
-    // check < or >
-    // most likely we will pass in the currentroot to the private method as a VAR
-    // Recursive step:
-    // go one word at a time
-    // do this by using substrings
-    // if list[i] < currentletter
-    // Left
-    // else if list[i] = currentletter
-    // go straight down
-    // node.mid (goes straight down)
-    // else list[i] > currentRoot
-    // Right
-    // node.right
-    // when do you stop for a given word?
-    // probably at the end of a charsequenec
-    // public
-    // for (char c : words){
-    // run recursion
-    // run associated TST add method from the example code
-    // method that traverses TsT
-    // }
-    // till out of letters in the words of term
-
-    @Override
-    public void addAll(Collection<? extends CharSequence> terms) {
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    @Override
-    public List<CharSequence> allMatches(CharSequence prefix) {
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
     /**
      * A search tree node representing a single character in an autocompletion term.
      */
@@ -83,5 +34,53 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
             this.mid = null;
             this.right = null;
         }
+    }
+
+    /**
+     * Constructs an empty instance.
+     */
+    public TernarySearchTreeAutocomplete() {
+        overallRoot = null;
+    }
+
+    @Override
+    public void addAll(Collection<? extends CharSequence> terms) {
+        TernarySearchTreeAutocomplete tst = new TernarySearchTreeAutocomplete();
+        for(CharSequence word : terms) {
+            tst.helper(word);
+        }
+    }
+
+    public void helper(CharSequence word) {
+        if(word == null) {
+            throw new NullPointerException("calls addAllHelper() with null key");
+        }
+        overallRoot = helper(overallRoot, word, false, 0);
+    }
+
+    private Node helper(Node n, CharSequence word, boolean stupidBoolean, int d) {
+        char c = word.charAt(d);
+        System.out.println("Character currently being added is: " + c);
+        if(n == null) {
+            n = new Node(c, true);
+        }
+        System.out.println("n is currently: " + n.data);
+        if(c > n.data) {
+            System.out.println("New character is > node, so right child");
+            n.right = helper(n.right, word, false, d);
+        } else if (c < n.data) {
+            System.out.println("New character is < node, so left child");
+            n.left = helper(n.left, word, false, d);
+        } else if (d < word.length() - 1) {
+            System.out.println("Still building word");
+            n.mid = helper(n.mid, word, false, d + 1);
+        }
+        return n;
+    }
+
+    @Override
+    public List<CharSequence> allMatches(CharSequence prefix) {
+        // TODO: Replace with your code
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }

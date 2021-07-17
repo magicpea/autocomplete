@@ -16,8 +16,11 @@ public class SimpleExample {
 
 // Choose your Autocomplete implementation.
 //        Autocomplete autocomplete = new SequentialSearchAutocomplete();
+////        autocomplete.addAll(terms);
+//        Autocomplete autocomplete = new BinarySearchAutocomplete();
 //        autocomplete.addAll(terms);
-        Autocomplete autocomplete = new BinarySearchAutocomplete();
+        //        autocomplete.addAll(terms);
+        Autocomplete autocomplete = new TernarySearchTreeAutocomplete();
         autocomplete.addAll(terms);
         autocomplete.allMatches("do");
 // Choose your prefix string.
