@@ -10,7 +10,7 @@ public class SimpleExampleBinary {
         List<CharSequence> terms = new ArrayList<>();
         terms.add("alpha");
         terms.add("delta");
-        terms.add("do");
+        terms.add("frog");
         terms.add("cats");
         terms.add("dodgy");
         terms.add("pilot");
@@ -22,7 +22,7 @@ public class SimpleExampleBinary {
         
         // Choose your prefix string.
         
-        CharSequence prefix = "do";
+        CharSequence prefix = "d";
         List<CharSequence> matches = autocomplete.allMatches(prefix);
         for (CharSequence match : matches) {
             System.out.println(match);
