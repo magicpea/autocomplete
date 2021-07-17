@@ -81,16 +81,18 @@ public class BinarySearchAutocomplete implements Autocomplete {
         low = allMatchesHelper(low, mid, prefix);
 
         high = allMatchesHelper(mid, high, prefix);
-        
+        System.out.println(low + " " + high);
         // CharSequence.compare(c.subSequence(0, prefix.length()), prefix) == 0)
         if (low < high){
             System.out.println(terms.subList(low, high));
             return terms.subList(low, high);
         } else if (low == high){
+            System.out.println("anything");
             List<CharSequence> temp = new ArrayList<CharSequence>();
             temp.add(terms.get(low));
             return temp;
         }
+         
         System.out.println("empty list vrother");
         return new ArrayList<CharSequence>();
     }
@@ -102,7 +104,7 @@ public class BinarySearchAutocomplete implements Autocomplete {
         // splits list in half
         int mid = (low + high)/ 2;
 
-        if(mid >= 0){
+        // if(mid >= 0){
             // This segment checks to return lower bound if found as a match
             // if (CharSequence.compare(terms.get(low).subSequence(0, prefix.length()), prefix) == 0){
             //    return low;
@@ -112,25 +114,28 @@ public class BinarySearchAutocomplete implements Autocomplete {
             // if (CharSequence.compare(terms.get(high).subSequence(0, prefix.length()), prefix) == 0){
             //    return high;
             // }
-
-            if (CharSequence.compare(terms.get(low), prefix) >= 0){
-                return low;
-            }
-
-            if (CharSequence.compare(terms.get(high), prefix) <= 0){
-                return high;
-            }
-
-            // explore lower portion
-            allMatchesHelper(low, mid, prefix);
             
-            // explore upper portion
-            allMatchesHelper(mid, high, prefix);
-
-
-
-
+            // when the sequence equals exactly 0 its a 100% match
+            // when less than zero that means it happens before in the alphabet (which for prefix is bad)
+            // when more than zero that means it happens after in the alphabet
+        if (CharSequence.compare(terms.get(low), prefix) >= 0){
+            return low;
         }
+
+        if (CharSequence.compare(terms.get(high), prefix) >= 0){
+            return high;
+        }
+
+        // explore lower portion
+        allMatchesHelper(low, mid, prefix);
+            
+        // explore upper portion
+        allMatchesHelper(mid, high, prefix);
+
+
+
+
+        //}
         return 0;
 
         // This segment checks to return lower bound if found as a match
