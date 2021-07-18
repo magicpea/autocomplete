@@ -58,9 +58,12 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
     //   post: build a Ternary search tree consisting:
     //         of all the letters of all the words in our terms set
     public void addAll(Collection<? extends CharSequence> terms) {
+        // Big theta(N) for for each loop
         for(CharSequence word : terms) {
+            //helper recursion big theta(N)
             helper(word);
         }
+        // big theta = N * log3(N)
     }
     // helper: 
     //   summary: adds a word from our terms collection to 
@@ -72,12 +75,13 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
     //   post: adds Ternary search Tree nodes for all 
   //           the letters of the given word
     public void helper(CharSequence word) {
+        // recursively runs through N characters in word (bigTheta(N))
         if(word == null) {
             throw new NullPointerException("calls addAllHelper() with null key");
         }
         this.overallRoot = helper(this.overallRoot, word, false, 0);
     }
-    
+
     // helper(private): 
     //   summary: adds a word from our terms collection to 
     //            the Ternary Search Tree 
@@ -112,7 +116,6 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
     @Override
     
     //  allMatches:
-
     //  summary: allMatches finds all terms in our Data Structure 
     //          that match a given Search
     //  parameters: prefix- charSequence search query
@@ -135,6 +138,7 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         List<CharSequence> list = new ArrayList<CharSequence>();
         
         // grabs sub tree address that contains prefix
+        // Log3(N) runitime opperation
         Node x = get(overallRoot, prefix, 0);
         
         // exits linkedlist if no matches are found in tree
@@ -143,12 +147,15 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         // adding new letter to word linked list if node is not empty
         if (x.data != 0) list.add(prefix);
         // Condenses the branches of our TST that match the prefix into strings 
+        
+        // log3(N)
         collect(x.mid, new StringBuilder(prefix), list);
         return list;
+        // big theta(2*log3(N))
     }
 
     
-    // Collect:
+    // collect:
     //  summary: collapse letters in a tree into words
     //  parameters: 
     //             x- Node Address of where the prefix children start
