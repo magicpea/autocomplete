@@ -23,25 +23,38 @@ public class BinarySearchAutocomplete implements Autocomplete {
         this.terms = new ArrayList<>();
     }
 
+    /**
+     * @param terms collection containing elements to be added
+     * summary : this method adds all of the terms within the parameter into the
+     * the final list of terms
+     * pre : this.terms is empty
+     * post : this.terms is full of CharSequences from the parameter & alphabetized
+     */
     @Override
     public void addAll(Collection<? extends CharSequence> terms) {
-        // Temp ArrayList
         List<CharSequence> temp = new ArrayList<CharSequence>();
         temp.addAll(terms);
-        // Sorting the list alphabetically
         Collections.sort(temp, CharSequence::compare);
-        // Adding the alphabetized list into this.terms
         this.terms.addAll(temp);
         System.out.println("Alphabetized list: " + this.terms);
     }
 
+    /**
+     *
+     * @param prefix search query
+     * @return a list of terms that match the given prefix
+     * summary : this method finds all matches of the prefix using binary search
+     * pre: no matches are found
+     * post: all instances of the prefix are found and added to a list
+     */
     @Override
     public List<CharSequence> allMatches(CharSequence prefix) {
         List<CharSequence> termsCopy = new ArrayList<CharSequence>();
         List<CharSequence> matches = new ArrayList<CharSequence>();
         termsCopy.addAll(this.terms);
-        System.out.println("Index? " + Collections.binarySearch(termsCopy, prefix, null));
+        System.out.println("Index: " + Collections.binarySearch(termsCopy, prefix, null));
         int superiorIndex = Collections.binarySearch(termsCopy, prefix, null);
+        // Here, the runtime will be O(N) because there is a for loop
         for(int i = superiorIndex; i < termsCopy.size(); i++) {
             if(CharSequence.compare(termsCopy.get(i).subSequence(0, prefix.length()), prefix) == 0) {
                 matches.add(termsCopy.get(i));
@@ -49,6 +62,8 @@ public class BinarySearchAutocomplete implements Autocomplete {
         }
         int curr = superiorIndex;
         double truth = CharSequence.compare(prefix, terms.get(curr).subSequence(0, prefix.length()));
+        // Doing the actual binary search here, the worst case (and most likely) runtime is O(log n)
+        // The best case runtime here would be O(1)
         while(truth == 0 && !(matches.contains(terms.get(curr)))) {
             if(CharSequence.compare(termsCopy.get(curr).subSequence(0, prefix.length()), prefix) == 0) {
                 matches.add(termsCopy.get(curr));
@@ -56,6 +71,7 @@ public class BinarySearchAutocomplete implements Autocomplete {
             curr++;
         }
         System.out.println("Here are the matches" + matches);
+        // Total runtime would be O(N) + O(log n)
         return matches;
     }
 }
