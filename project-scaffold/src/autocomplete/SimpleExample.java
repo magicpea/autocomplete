@@ -16,17 +16,14 @@ public class SimpleExample {
 
 // Choose your Autocomplete implementation.
 //        Autocomplete autocomplete = new SequentialSearchAutocomplete();
-////        autocomplete.addAll(terms);
+//        autocomplete.addAll(terms);
 //        Autocomplete autocomplete = new BinarySearchAutocomplete();
 //        autocomplete.addAll(terms);
-        //        autocomplete.addAll(terms);
-        Autocomplete searchyBoi = new TernarySearchTreeAutocomplete();
-        searchyBoi.addAll(terms);
-        System.out.println("plz work :" + searchyBoi.toString());
-        // autocomplete.allMatches("do");
+        Autocomplete autocomplete = new TernarySearchTreeAutocomplete();
+        autocomplete.addAll(terms);
 // Choose your prefix string.
         CharSequence prefix = "do";
-        List<CharSequence> matches = searchyBoi.allMatches(prefix);
+        List<CharSequence> matches = autocomplete.allMatches(prefix);
         System.out.println(matches);
         for (CharSequence match : matches) {
             System.out.println(match);

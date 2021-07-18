@@ -49,12 +49,9 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
 
     @Override
     public void addAll(Collection<? extends CharSequence> terms) {
-        //TernarySearchTreeAutocomplete tst = new TernarySearchTreeAutocomplete();
-
         for(CharSequence word : terms) {
             helper(word);
         }
-        //return tst;
     }
 
     public void helper(CharSequence word) {
@@ -64,7 +61,7 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         this.overallRoot = helper(this.overallRoot, word, false, 0);
     }
 
-    private Node helper(Node n, CharSequence word, boolean stupidBoolean, int d) {
+    private Node helper(Node n, CharSequence word, boolean temp, int d) {
         char c = word.charAt(d);
         System.out.println("Character currently being added is: " + c);
         if(n == null) {
@@ -86,11 +83,8 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
 
     @Override
     public List<CharSequence> allMatches(CharSequence prefix) {
-        System.out.println("Houston we are inside allMatches, Over... *beep*");
         return keysWithPrefix(prefix);
-         // we are going to finish this tonight 100%  current bet is 5$
     }
-
 
     /**
      * Returns all of the keys in the set that start with prefix.
@@ -100,29 +94,29 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
      * @throws IllegalArgumentException if prefix is empty
      */
     public List<CharSequence> keysWithPrefix(CharSequence prefix) {
-        System.out.println("inside keysWithPrefix -alpha squad over *beeps repeatedly*");
         if (prefix == null) {
             throw new NullPointerException("calls keysWithPrefix() with null argument");
         } else if (prefix.length() == 0) {
             throw new IllegalArgumentException("prefix must have length >= 1");
         }
-        // keep linked list
         List<CharSequence> list = new LinkedList<CharSequence>();
         Node x = get(overallRoot, prefix, 0);
         if (x == null) return list;
-        // need to modify this 
         if (x.data != 0) list.add(prefix);
         collect(x.mid, new StringBuilder(prefix), list);
         return list;
     }
 
-    // Collects all keys in subtree rooted at x with the given prefix
     private void collect(Node x, StringBuilder prefix, List<CharSequence> list) {
-        if (x == null) return;
+        if (x == null) {
+            return;
+        }
         collect(x.left,  prefix, list);
-        if (x.data != 0) list.add(prefix.toString() + x.data);
+        if (x.data != 0) {
+            list.add(prefix.toString() + x.data);
+        }
         prefix.append(x.data);
-        collect(x.mid,   prefix, list);
+        collect(x.mid, prefix, list);
         prefix.deleteCharAt(prefix.length() - 1);
         collect(x.right, prefix, list);
     }
@@ -138,14 +132,23 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         return x.data;
     }
 
-    // Returns subtree corresponding to given key
     private Node get(Node x, CharSequence word, int d) {
-        if (x == null) return null;
+        if (x == null) {
+            return null;
+        }
         char c = word.charAt(d);
-        if      (c < x.data)              return get(x.left,  word, d);
-        else if (c > x.data)              return get(x.right, word, d);
-        else if (d < word.length() - 1) return get(x.mid, word, d + 1);
-        else                           return x;
+        if (c < x.data) {
+            return get(x.left, word, d);
+        }
+        else if (c > x.data) {
+            return get(x.right, word, d);
+        }
+        else if (d < word.length() - 1) {
+            return get(x.mid, word, d + 1);
+        }
+        else {
+            return x;
+        }
     }
 
     public String toString() {
