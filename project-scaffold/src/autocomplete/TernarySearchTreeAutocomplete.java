@@ -62,15 +62,33 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
             helper(word);
         }
     }
-
-    // need to be done 
+    // helper: 
+    //   summary: adds a word from our terms collection to 
+    //            the Ternary Search Tree 
+    //   parameter: 
+    //          word - CharSequence to be added to the TST 
+    //   pre: given a collection of characters in a word
+    //          throws exception if word is empty 
+    //   post: adds Ternary search Tree nodes for all 
+  //           the letters of the given word
     public void helper(CharSequence word) {
         if(word == null) {
             throw new NullPointerException("calls addAllHelper() with null key");
         }
         this.overallRoot = helper(this.overallRoot, word, false, 0);
     }
-    // need to be done
+    
+    // helper(private): 
+    //   summary: adds a word from our terms collection to 
+    //            the Ternary Search Tree 
+    //   parameter: 
+    //             n - previous node that are going to add new nodes to      
+    //             word - CharSequence to be added to the TST
+    //             stupidBoolean - placeholder boolean for adding new nodes
+    //             d- the current index within word of interest 
+    //   pre: given a non empty node n, runs comparisons to determine where next node should go 
+    //        following TST invariant 
+    //   post: adds Ternary search Tree nodes for the letters of the given word
     private Node helper(Node n, CharSequence word, boolean stupidBoolean, int d) {
         char c = word.charAt(d);
         System.out.println("Character currently being added is: " + c);
@@ -96,13 +114,13 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
     //  allMatches:
 
     //  summary: allMatches finds all terms in our Data Structure 
-    //          that match a Given Search
-    //  parameters: given a charSequence prefix search query
+    //          that match a given Search
+    //  parameters: prefix- charSequence search query
     //  pre: given a charSequence prefix query, 
     //       and that a local Ternary search tree exists
     //       throws exception if prefix is not entered
     //       throws exception if prefix has length of zero
-    //  post: return a list of all charSequences that contain the given prefix
+    //  post: returns a list of all charSequences that contain the given prefix
     public List<CharSequence> allMatches(CharSequence prefix) {
         System.out.println("inside keysWithPrefix");
         
@@ -113,21 +131,31 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
             throw new IllegalArgumentException("prefix must have length >= 1");
         }
         
-        // initializing our list
-        List<CharSequence> list = new LinkedList<CharSequence>();
+        // initializing a linked list for word building
+        List<CharSequence> list = new ArrayList<CharSequence>();
         
-        // grabs sub tree that contains prefix
+        // grabs sub tree address that contains prefix
         Node x = get(overallRoot, prefix, 0);
         
-        // exits list if no matches are found in tree
+        // exits linkedlist if no matches are found in tree
         if (x == null) return list;
         
+        // adding new letter to word linked list if node is not empty
         if (x.data != 0) list.add(prefix);
+        // Condenses the branches of our TST that match the prefix into strings 
         collect(x.mid, new StringBuilder(prefix), list);
         return list;
     }
 
     
+    // Collect:
+    //  summary: collapse letters in a tree into words
+    //  parameters: 
+    //             x- Node Address of where the prefix children start
+    //             prefix- Appends the specified character sequence to our search query
+    //             list- A collection that holds all of our matches as they are added 
+    //  pre: given a prefix address node x, stringbuilder prefix, and a collection list   
+    //  post: returns the list of words that hang off of a given node address. 
 
     // Collects all keys in subtree rooted at x with the given prefix
     private void collect(Node x, StringBuilder prefix, List<CharSequence> list) {
@@ -140,7 +168,14 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         collect(x.right, prefix, list);
     }
     
-    // need to be done 
+    // get:
+    //  summary: collapse letters in a tree into words
+    //  parameters: 
+    //             word- the charsequence we are trying to find in the TST
+                
+    //  pre: given a word of interest
+    //       throws an exception if the word is empty or it's is zero
+    //  post: returns the node address of a given word in the TST 
     public char get(CharSequence word) {
         if (word == null) {
             throw new NullPointerException("calls get() with null argument");
@@ -151,8 +186,16 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         if (x == null) return 0;
         return x.data;
     }
-    //needs to be done
-    // Returns subtree corresponding to given key
+    
+    // get(private):
+    //  summary: collapse letters in a tree into words
+    //  parameters: 
+    //             x- the current node we are situated at
+    //             word- the charsequence we are trying to find in the TST
+    //             d- the current index within word of interest
+    //  pre: given a node address, word of interest and the character index of interest
+    //       throws exception if the node address x does not exist
+    //  post: returns the node address at the end of given word in the TST 
     private Node get(Node x, CharSequence word, int d) {
         if (x == null) return null;
         char c = word.charAt(d);
