@@ -40,7 +40,6 @@ public class BinarySearchAutocomplete implements Autocomplete {
     }
 
     /**
-     *
      * @param prefix search query
      * @return a list of terms that match the given prefix
      * summary : this method finds all matches of the prefix using binary search
