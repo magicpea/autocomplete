@@ -39,9 +39,8 @@ class CitiesInputSizeExperiments {
         Set<String> unique = new HashSet<>(MAX_CITIES, 1.0f);
         Scanner input = new Scanner(new GZIPInputStream(new FileInputStream(PATH)));
         while (input.hasNextLine() && unique.size() < MAX_CITIES) {
-            Scanner line = new Scanner(input.nextLine());
-            int population = line.nextInt();
-            String city = line.next(); // Only the first term
+            Scanner line = new Scanner(input.nextLine()).useDelimiter("\t");
+            String city = line.next();
             unique.add(city);
         }
         // Shuffle the cities to keep things interesting.

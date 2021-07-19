@@ -36,7 +36,7 @@ public class BinarySearchAutocomplete implements Autocomplete {
         temp.addAll(terms);
         Collections.sort(temp, CharSequence::compare);
         this.terms.addAll(temp);
-        System.out.println("Alphabetized list: " + this.terms);
+        // System.out.println("Alphabetized list: " + this.terms);
     }
 
     /**
@@ -52,7 +52,7 @@ public class BinarySearchAutocomplete implements Autocomplete {
         List<CharSequence> termsCopy = new ArrayList<CharSequence>();
         List<CharSequence> matches = new ArrayList<CharSequence>();
         termsCopy.addAll(this.terms);
-        System.out.println("Index: " + Collections.binarySearch(termsCopy, prefix, null));
+        // System.out.println("Index: " + Collections.binarySearch(termsCopy, prefix, null));
         int superiorIndex = Collections.binarySearch(termsCopy, prefix, null);
         // Here, the runtime will be O(N) because there is a for loop
         for(int i = superiorIndex; i < termsCopy.size(); i++) {
@@ -70,7 +70,7 @@ public class BinarySearchAutocomplete implements Autocomplete {
             }
             curr++;
         }
-        System.out.println("Here are the matches" + matches);
+        // System.out.println("Here are the matches" + matches);
         // Total runtime would be O(N) + O(log n)
         return matches;
     }

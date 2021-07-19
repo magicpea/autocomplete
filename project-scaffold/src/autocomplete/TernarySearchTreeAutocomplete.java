@@ -95,19 +95,19 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
     //   post: adds Ternary search Tree nodes for the letters of the given word
     private Node helper(Node n, CharSequence word, boolean stupidBoolean, int d) {
         char c = word.charAt(d);
-        System.out.println("Character currently being added is: " + c);
+        // System.out.println("Character currently being added is: " + c);
         if(n == null) {
             n = new Node(c, true);
         }
-        System.out.println("n is currently: " + n.data);
+        // System.out.println("n is currently: " + n.data);
         if(c > n.data) {
-            System.out.println("New character is > node, so right child");
+            // System.out.println("New character is > node, so right child");
             n.right = helper(n.right, word, false, d);
         } else if (c < n.data) {
-            System.out.println("New character is < node, so left child");
+            // System.out.println("New character is < node, so left child");
             n.left = helper(n.left, word, false, d);
         } else if (d < word.length() - 1) {
-            System.out.println("Still building word");
+            // System.out.println("Still building word");
             n.mid = helper(n.mid, word, false, d + 1);
         }
         return n;

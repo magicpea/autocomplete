@@ -46,7 +46,10 @@ public class SequentialSearchAutocomplete implements Autocomplete {
         List<CharSequence> matches = new ArrayList<CharSequence>();
         // Runtime here would be O(N) because there is one foreach loop
         for(CharSequence e : this.terms) {
-            if(CharSequence.compare(e.subSequence(0, prefix.length()), prefix) == 0) {
+            // find only the prefix of a given word to compare
+            CharSequence word = e.subSequence(0, prefix.length());
+            // check to see if it matches
+            if(e.length() >= prefix.length() && CharSequence.compare(word, prefix) == 0) {
                 matches.add(e);
             }
         }
