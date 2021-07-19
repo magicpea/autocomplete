@@ -1,14 +1,8 @@
 package autocomplete;
 
-
-import javax.swing.plaf.synth.SynthUI;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 
 /**
  * Ternary search tree (TST) implementation of the {@link Autocomplete} interface.
@@ -48,15 +42,14 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
     }
 
     @Override
-    // addAll:
-
-    //   summary: adds all the words in our terms collection to 
-    //            build our Ternary Search Tree 
-    //   parameters: terms - collection of CharSequences 
-    //   pre: given a collection of terms
-            
-    //   post: build a Ternary search tree consisting:
-    //         of all the letters of all the words in our terms set
+    /**
+     * @param terms collection of CharSequences
+     * summary : adds all the words in our terms collection to
+     *              build our Ternary Search Tree
+     * pre : given a collection of terms
+     * post : build a Ternary search tree consisting:
+     *              of all the letters of all the words in our terms set
+     */
     public void addAll(Collection<? extends CharSequence> terms) {
         // Big theta(N) for for each loop
         for(CharSequence word : terms) {
@@ -65,15 +58,16 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         }
         // big theta = N * log3(N)
     }
-    // helper: 
-    //   summary: adds a word from our terms collection to 
-    //            the Ternary Search Tree 
-    //   parameter: 
-    //          word - CharSequence to be added to the TST 
-    //   pre: given a collection of characters in a word
-    //          throws exception if word is empty 
-    //   post: adds Ternary search Tree nodes for all 
-  //           the letters of the given word
+
+    /**
+     * @param word CharSequence to be added to the TST
+     * summary : adds a word from our terms collection to
+     *                 the Ternary Search Tree
+     * pre : given a collection of characters in a word
+     *               throws exception if word is empty
+     * post : adds Ternary search Tree nodes for all
+     *              the letters of the given word
+     */
     public void helper(CharSequence word) {
         // recursively runs through N characters in word (bigTheta(N))
         if(word == null) {
@@ -82,17 +76,20 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         this.overallRoot = helper(this.overallRoot, word, false, 0);
     }
 
-    // helper(private): 
-    //   summary: adds a word from our terms collection to 
-    //            the Ternary Search Tree 
-    //   parameter: 
-    //             n - previous node that are going to add new nodes to      
-    //             word - CharSequence to be added to the TST
-    //             stupidBoolean - placeholder boolean for adding new nodes
-    //             d- the current index within word of interest 
-    //   pre: given a non empty node n, runs comparisons to determine where next node should go 
-    //        following TST invariant 
-    //   post: adds Ternary search Tree nodes for the letters of the given word
+    /**
+     * @param n node that are going to add new nodes to
+     * @param word CharSequence to be added to the TST
+     * @param stupidBoolean placeholder boolean for adding new nodes
+     * @param d the current index within word of interest
+     * @return tree Node that matches the letter of the given word
+     * summary : adds a word from our terms collection to
+     *                 the Ternary Search Tree, uses recursion to generate new
+     *                 nodes and decide where to put them based on the current
+     *                 character value in relation to the node's data value
+     * pre: given a non empty node n, runs comparisons to determine where next node should go
+     *             following TST invariant
+     * post: adds Ternary search Tree nodes for the letters of the given word
+     */
     private Node helper(Node n, CharSequence word, boolean stupidBoolean, int d) {
         char c = word.charAt(d);
         // System.out.println("Character currently being added is: " + c);
@@ -114,16 +111,18 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
     }
 
     @Override
-    
-    //  allMatches:
-    //  summary: allMatches finds all terms in our Data Structure 
-    //          that match a given Search
-    //  parameters: prefix- charSequence search query
-    //  pre: given a charSequence prefix query, 
-    //       and that a local Ternary search tree exists
-    //       throws exception if prefix is not entered
-    //       throws exception if prefix has length of zero
-    //  post: returns a list of all charSequences that contain the given prefix
+
+    /**
+     * @param prefix charSequence search query
+     * @return list of all charSequences containing the given prefix
+     * @throws exception if prefix is not entered
+     * @throws exception if prefix has length of zero
+     * summary : allMatches finds all terms in our Data Structure
+     *               that match a given Search
+     * pre : given a charSequence prefix query, and that a local Ternary
+     *               search tree exists
+     * post : list of matches containing prefix are returned
+     */
     public List<CharSequence> allMatches(CharSequence prefix) {
         System.out.println("inside keysWithPrefix");
         
@@ -154,35 +153,37 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         // big theta(2*log3(N))
     }
 
-    
-    // collect:
-    //  summary: collapse letters in a tree into words
-    //  parameters: 
-    //             x- Node Address of where the prefix children start
-    //             prefix- Appends the specified character sequence to our search query
-    //             list- A collection that holds all of our matches as they are added 
-    //  pre: given a prefix address node x, stringbuilder prefix, and a collection list   
-    //  post: returns the list of words that hang off of a given node address. 
-
-    // Collects all keys in subtree rooted at x with the given prefix
+    /**
+     * @param x Node Address of where the prefix children start
+     * @param prefix Appends the specified character sequence to our search query
+     * @param list A collection that holds all of our matches as they are added
+     * summary : collects all keys in subtree rooted at x with given prefix and
+     *             collapses letters into word, uses recursion
+     * pre : given a prefix address node x, Stringbuilder prefix, and a collection list
+     * post : returns the list of words that hang off of a given node address
+     */
     private void collect(Node x, StringBuilder prefix, List<CharSequence> list) {
-        if (x == null) return;
+        if (x == null) {
+            return;
+        }
         collect(x.left,  prefix, list);
-        if (x.data != 0) list.add(prefix.toString() + x.data);
+        if (x.data != 0) {
+            list.add(prefix.toString() + x.data);
+        }
         prefix.append(x.data);
-        collect(x.mid,   prefix, list);
+        collect(x.mid, prefix, list);
         prefix.deleteCharAt(prefix.length() - 1);
         collect(x.right, prefix, list);
     }
-    
-    // get:
-    //  summary: collapse letters in a tree into words
-    //  parameters: 
-    //             word- the charsequence we are trying to find in the TST
-                
-    //  pre: given a word of interest
-    //       throws an exception if the word is empty or it's is zero
-    //  post: returns the node address of a given word in the TST 
+
+    /**
+     * @param word the CharSequence we are trying to find in the TST
+     * @return a character representing the node of the given word within the TST
+     * @throws exception if the word is empty or it's is zero
+     * summary : find the character element of a Node using the given prefix
+     * pre : given a word of interest
+     * post : returns the node address of a given word in the TST
+     */
     public char get(CharSequence word) {
         if (word == null) {
             throw new NullPointerException("calls get() with null argument");
@@ -190,25 +191,39 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
             throw new IllegalArgumentException("key must have length >= 1");
         }
         Node x = get(overallRoot, word, 0);
-        if (x == null) return 0;
+        if (x == null) {
+            return 0;
+        }
         return x.data;
     }
-    
-    // get(private):
-    //  summary: collapse letters in a tree into words
-    //  parameters: 
-    //             x- the current node we are situated at
-    //             word- the charsequence we are trying to find in the TST
-    //             d- the current index within word of interest
-    //  pre: given a node address, word of interest and the character index of interest
-    //       throws exception if the node address x does not exist
-    //  post: returns the node address at the end of given word in the TST 
+
+    /**
+     * @param x the current node we are situated at
+     * @param word the CharSequence we are trying to find in the TST
+     * @param d the current index within word of interest
+     * @return the node at the end of the given word in the TST
+     * summary : decides which side of the node to add to based on
+     *             the value ifi the current character in relation to
+     *             the data value of the Node
+     * pre : given a node, a word, and an index
+     * post : a Node is returned, recursion happens
+     */
     private Node get(Node x, CharSequence word, int d) {
-        if (x == null) return null;
+        if (x == null) {
+            return null;
+        }
         char c = word.charAt(d);
-        if      (c < x.data)              return get(x.left,  word, d);
-        else if (c > x.data)              return get(x.right, word, d);
-        else if (d < word.length() - 1) return get(x.mid, word, d + 1);
-        else                           return x;
+        if (c < x.data) {
+            return get(x.left,  word, d);
+        }
+        else if (c > x.data) {
+            return get(x.right, word, d);
+        }
+        else if (d < word.length() - 1) {
+            return get(x.mid, word, d + 1);
+        }
+        else {
+            return x;
+        }
     }
 }
