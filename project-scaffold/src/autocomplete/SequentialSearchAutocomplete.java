@@ -31,7 +31,7 @@ public class SequentialSearchAutocomplete implements Autocomplete {
     @Override
     public void addAll(Collection<? extends CharSequence> terms) {
         this.terms.addAll(terms);
-        System.out.print(this.terms);
+        //System.out.print(this.terms);
     }
 
     /**
@@ -47,9 +47,9 @@ public class SequentialSearchAutocomplete implements Autocomplete {
         // Runtime here would be O(N) because there is one foreach loop
         for(CharSequence e : this.terms) {
             // find only the prefix of a given word to compare
-            CharSequence word = e.subSequence(0, prefix.length());
+            //CharSequence word = e.subSequence(0, prefix.length());
             // check to see if it matches
-            if(e.length() >= prefix.length() && CharSequence.compare(word, prefix) == 0) {
+            if(e.length() >= prefix.length() && CharSequence.compare(e.subSequence(0, prefix.length()), prefix) == 0) {
                 matches.add(e);
             }
         }

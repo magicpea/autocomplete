@@ -124,7 +124,7 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
      * post : list of matches containing prefix are returned
      */
     public List<CharSequence> allMatches(CharSequence prefix) {
-        System.out.println("inside keysWithPrefix");
+        // System.out.println("inside keysWithPrefix");
         
         // Handling our base cases
         if (prefix == null) {

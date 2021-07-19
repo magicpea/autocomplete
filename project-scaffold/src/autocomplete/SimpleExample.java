@@ -19,7 +19,7 @@ public class SimpleExample {
 //        autocomplete.addAll(terms);
 //        Autocomplete autocomplete = new BinarySearchAutocomplete();
 //        autocomplete.addAll(terms);
-        Autocomplete autocomplete = new TernarySearchTreeAutocomplete();
+        Autocomplete autocomplete = new BinarySearchAutocomplete();
         autocomplete.addAll(terms);
 // Choose your prefix string.
         CharSequence prefix = "do";

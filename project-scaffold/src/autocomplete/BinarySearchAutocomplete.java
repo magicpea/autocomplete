@@ -54,21 +54,36 @@ public class BinarySearchAutocomplete implements Autocomplete {
         // System.out.println("Index: " + Collections.binarySearch(termsCopy, prefix, null));
         int superiorIndex = Collections.binarySearch(termsCopy, prefix, null);
         // Here, the runtime will be O(N) because there is a for loop
-        for(int i = superiorIndex; i < termsCopy.size(); i++) {
-            if(CharSequence.compare(termsCopy.get(i).subSequence(0, prefix.length()), prefix) == 0) {
-                matches.add(termsCopy.get(i));
-            }
-        }
-        int curr = superiorIndex;
-        double truth = CharSequence.compare(prefix, terms.get(curr).subSequence(0, prefix.length()));
+        if (superiorIndex >= 0){
+            for(int i = superiorIndex; i < termsCopy.size(); i++) {
+                if(termsCopy.get(i).length() >= prefix.length()) {
+                    CharSequence word = termsCopy.get(i).subSequence(0, prefix.length());
+                    double match_percent = CharSequence.compare(word, prefix);
+                    if(match_percent == 0 && !(matches.contains(termsCopy.get(i)))) {
+                        matches.add(termsCopy.get(i));
+                    }
+                }
+           }    
+        } 
+        // for(int i = superiorIndex; i < termsCopy.size(); i++) {
+        //      if(termsCopy.get(i).length() >= prefix.length()) {
+        //          CharSequence word = termsCopy.get(i).subSequence(0, prefix.length());
+        //          double match_percent = CharSequence.compare(word, prefix);
+        //          if(match_percent == 0 && !(matches.contains(termsCopy.get(i)))) {
+        //              matches.add(termsCopy.get(i));
+        //          }
+        //      }
+        // }
+        // int curr = superiorIndex;
         // Doing the actual binary search here, the worst case (and most likely) runtime is O(log n)
         // The best case runtime here would be O(1)
-        while(truth == 0 && !(matches.contains(terms.get(curr)))) {
-            if(CharSequence.compare(termsCopy.get(curr).subSequence(0, prefix.length()), prefix) == 0) {
-                matches.add(termsCopy.get(curr));
-            }
-            curr++;
-        }
+        // while(curr >= 0 && termsCopy.get(curr).length() >= prefix.length() && truth == 0 && !(matches.contains(terms.get(curr)))) {
+        //     double truth = CharSequence.compare(prefix, terms.get(curr).subSequence(0, prefix.length()));
+        //     if(CharSequence.compare(termsCopy.get(curr).subSequence(0, prefix.length()), prefix) == 0) {
+        //         matches.add(termsCopy.get(curr));
+        //     }
+        //     curr++;
+        // }
         // System.out.println("Here are the matches" + matches);
         // Total runtime would be O(N) + O(log n)
         return matches;
