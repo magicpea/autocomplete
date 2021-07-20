@@ -50,11 +50,15 @@ class CitiesInputSizeExperiments {
 
         // Testing implementations.
         Map<String, Supplier<Autocomplete>> implementations = Map.of(
-                "TreeSetAutocomplete", TreeSetAutocomplete::new,
-                "LinearSearchAutocomplete", SequentialSearchAutocomplete::new,
-                "BinarySearchAutocomplete", BinarySearchAutocomplete::new,
-                "TernarySearchTreeAutocomplete", TernarySearchTreeAutocomplete::new
+                 "TreeSetAutocomplete", TreeSetAutocomplete::new,
+                 "LinearSearchAutocomplete", SequentialSearchAutocomplete::new,
+                 "BinarySearchAutocomplete", BinarySearchAutocomplete::new,
+                 "TernarySearchTreeAutocomplete", TernarySearchTreeAutocomplete::new
         );
+
+        // Map<String, Supplier<Autocomplete>> implementations = Map.of(
+        //         "BinarySearchAutocomplete", BinarySearchAutocomplete::new        
+        // );
         for (String name : implementations.keySet()) {
             System.out.println();
             System.out.println(name);
