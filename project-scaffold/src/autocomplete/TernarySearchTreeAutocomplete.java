@@ -124,6 +124,8 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
      * post : list of matches containing prefix are returned
      */
     public List<CharSequence> allMatches(CharSequence prefix) {
+        // big theta(2*log3(N))
+        
         // System.out.println("inside keysWithPrefix");
         
         // Handling our base cases
@@ -137,8 +139,8 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         List<CharSequence> list = new ArrayList<CharSequence>();
         
         // grabs sub tree address that contains prefix
-        // Log3(N) runitime opperation
         Node x = get(overallRoot, prefix, 0);
+         // Log3(N) runitime opperation, recursively explore three children nodes
         
         // exits linkedlist if no matches are found in tree
         if (x == null) return list;
@@ -146,11 +148,9 @@ public class TernarySearchTreeAutocomplete implements Autocomplete {
         // adding new letter to word linked list if node is not empty
         if (x.data != 0) list.add(prefix);
         // Condenses the branches of our TST that match the prefix into strings 
-        
-        // log3(N)
         collect(x.mid, new StringBuilder(prefix), list);
+        // log3(N), recursively building strings from each threeway branch
         return list;
-        // big theta(2*log3(N))
     }
 
     /**

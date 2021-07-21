@@ -30,8 +30,9 @@ public class SequentialSearchAutocomplete implements Autocomplete {
     */
     @Override
     public void addAll(Collection<? extends CharSequence> terms) {
+        // iterating over N items, Big Theta(N)
         this.terms.addAll(terms);
-        //System.out.print(this.terms);
+        System.out.print(this.terms);
     }
 
     /**
@@ -44,12 +45,17 @@ public class SequentialSearchAutocomplete implements Autocomplete {
     @Override
     public List<CharSequence> allMatches(CharSequence prefix) {
         List<CharSequence> matches = new ArrayList<CharSequence>();
-        // Runtime here would be O(N) because there is one foreach loop
+        // Runtime here would be Big Theta(N) because iterating over N elements
         for(CharSequence e : this.terms) {
             // find only the prefix of a given word to compare
             //CharSequence word = e.subSequence(0, prefix.length());
             // check to see if it matches
-            if(e.length() >= prefix.length() && CharSequence.compare(e.subSequence(0, prefix.length()), prefix) == 0) {
+
+            boolean length_check = e.length() >= prefix.length();
+            double difference = CharSequence.compare
+                                (e.subSequence(0, prefix.length()), prefix);
+            
+            if(length_check && difference == 0) {
                 matches.add(e);
             }
         }
