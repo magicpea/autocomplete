@@ -48,36 +48,22 @@ public class BinarySearchAutocomplete implements Autocomplete {
      */
     @Override
     public List<CharSequence> allMatches(CharSequence prefix) {
-        // I think we can assume that addAll has already been called so this is commented out
-        //List<CharSequence> termsCopy = new ArrayList<CharSequence>();
         List<CharSequence> matches = new ArrayList<CharSequence>();
-        
         // Same here we assume that the terms are already sorted
-        // termsCopy.addAll(this.terms);
-
-        // System.out.println("Index: " + Collections.binarySearch(termsCopy, prefix, null));
         int superiorIndex = Collections.binarySearch(this.terms, prefix, null);
-    
         int curr = superiorIndex;
-        // Doing the actual binary search here, the worst case (and most likely) runtime is O(log n)
-        // The best case runtime here would be O(1)
+        // Doing the actual binary search here, the worst case (and most likely) runtime is theta(n)
         if (curr >= 0){
             double difference = CharSequence.compare(prefix, terms.get(curr).subSequence(0, prefix.length()));
             boolean new_match = !(matches.contains(this.terms.get(curr)));
             while(difference == 0) {
-                //double truth = CharSequence.compare(prefix, terms.get(curr).subSequence(0, prefix.length()));
-                // if(CharSequence.compare(termsCopy.get(curr).subSequence(0, prefix.length()), prefix) == 0 && !(matches.contains(terms.get(curr)))) {
-                //     matches.add(termsCopy.get(curr));
-                // }
                 if (new_match){
                     matches.add(this.terms.get(curr));    
                 }
                 curr++;
             }
         }
-        
         // System.out.println("Here are the matches" + matches);
-        // Total runtime would be O(N) + O(log n)
         return matches;
     }
 }
