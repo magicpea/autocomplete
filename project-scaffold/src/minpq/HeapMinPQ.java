@@ -4,6 +4,11 @@ import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 
+//A standard binary heap priority queue that delegates all method calls
+//        to java.util.PriorityQueue. This class contains only one field
+//        assigned to an instance of PriorityQueue. Each operation is
+//        implemented by calling the underlying PriorityQueue.
+
 /**
  * {@link PriorityQueue} implementation of the {@link ExtrinsicMinPQ} interface.
  *
@@ -28,8 +33,7 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (contains(item)) {
             throw new IllegalArgumentException("Already contains " + item);
         }
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        System.out.println(pq.toString());
     }
 
     @Override

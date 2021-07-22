@@ -6,7 +6,8 @@ import java.util.List;
 
 public class EasyExample  {
     public static void main(String[] args) {
-        ExtrinsicMinPQ<String> pq = new DoubleMapMinPQ<>();
+//        ExtrinsicMinPQ<String> pq = new DoubleMapMinPQ<>();
+        ExtrinsicMinPQ<String> pq = new UnsortedArrayMinPQ<>();
         pq.add("1", 1.0);
         pq.add("2", 2.0);
         pq.add("3", 3.0);
