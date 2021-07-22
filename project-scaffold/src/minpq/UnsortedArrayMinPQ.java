@@ -65,7 +65,8 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T>  {
         if (!contains(item)) {
             throw new NoSuchElementException("PQ does not contain " + item);
         }
-        // Let's day we don't know where value is in the array
+        // How do we add and remove T nodes from our list of items
+        // I
 //        for(PriorityNode<T> c : items) {
 //            if(c.item() == item) {
 //                System.out.println("Before: " + items);
@@ -73,11 +74,13 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T>  {
 //                System.out.println("After: " + items);
 //            }
 //        }
-//        PriorityNode<T> temp = new PriorityNode<T>(item, priority);
-//        items.add(temp);
+        PriorityNode<T> temp = new PriorityNode<T>(item, priority);
+        items.add(temp);
+//        items.add(item, priority);
         System.out.println("Item: " + item + " & Priority: " + priority);
+
     }
-//
+//  Here's the code from the DoubleMapMinPQ
 //    double oldPriority = itemToPriority.get(item);
 //        if (priority != oldPriority) {
 //        Set<T> itemsWithOldPriority = priorityToItem.get(oldPriority);
