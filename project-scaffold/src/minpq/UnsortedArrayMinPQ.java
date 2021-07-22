@@ -1,8 +1,10 @@
 package minpq;
 
-import org.w3c.dom.Node;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
-import java.util.*;
+import org.graalvm.compiler.nodes.ProxyNode;
 
 /**
  * Unsorted array (or {@link ArrayList}) implementation of the {@link ExtrinsicMinPQ} interface.
@@ -10,7 +12,7 @@ import java.util.*;
  * @param <T> the type of elements in this priority queue.
  * @see ExtrinsicMinPQ
  */
-public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T>  {
+public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
     /**
      * {@link List} of {@link PriorityNode} objects representing the item-priority pairs in no specific order.
      */
@@ -28,20 +30,35 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T>  {
         if (contains(item)) {
             throw new IllegalArgumentException("Already contains " + item);
         }
-        PriorityNode<T> temp = new PriorityNode<T>(item, priority);
-        System.out.println(temp);
+        // in the current version we are calling the method we are trying to write
+        
+        // Figuring out how to avoid this our main issue and how to reference the extrinsicPQ methods 
+        
+
+        // build a node
+
+        // then call items.add
+
+        // <T>- all different data types
+
+        PriorityNode<T> temp = new PriorityNode<>(item, priority);
         items.add(temp);
+        System.out.println(items);
     }
 
     @Override
     public boolean contains(T item) {
-        for(PriorityNode<T> c : items) {
-            if(c.item() == item) {
+        // copy 
+        // look at the copy
+        List<PriorityNode<T>> temp = new ArrayList<>(items);
+        
+        for ( PriorityNode<T> c : temp){
+            System.out.println(c + " " + item);
+            if (c.item() == item){
                 return true;
             }
         }
         return false;
-//        return items.contains(item);
     }
 
     @Override
@@ -50,6 +67,12 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T>  {
             throw new NoSuchElementException("PQ is empty");
         }
         return peekMin();
+        // copy the list's first node?
+        // copying is a waste if not necessary
+        
+        // look at priority node class for help 
+        // then grab the first node?
+
     }
 
     @Override
@@ -57,40 +80,44 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T>  {
         if (isEmpty()) {
             throw new NoSuchElementException("PQ is empty");
         }
-        return removeMin();
+        return null;
     }
 
     @Override
     public void changePriority(T item, double priority) {
+        System.out.println("changing priority chief");
+
+        System.out.println("item: " + item);
+        System.out.println("priority: " + priority);
         if (!contains(item)) {
             throw new NoSuchElementException("PQ does not contain " + item);
         }
-        // How do we add and remove T nodes from our list of items
-        // I
-//        for(PriorityNode<T> c : items) {
-//            if(c.item() == item) {
-//                System.out.println("Before: " + items);
-//                items.remove(c);
-//                System.out.println("After: " + items);
-//            }
-//        }
-        PriorityNode<T> temp = new PriorityNode<T>(item, priority);
-        items.add(temp);
-//        items.add(item, priority);
-        System.out.println("Item: " + item + " & Priority: " + priority);
+        
 
+        // PriorityNode<T> tem = new PriorityNode<T>(item, priority);
+        // System.out.println(tem);
+        // items.add(tem);
+        // System.out.println(items);
+
+        // for loop to iterate the queue to find the matching item in the que to modify
+
+        // then once we find that we remove it from the priority que with "remove"
+
+        // then we iterate the queue again, checking priority queue (<, > =)
+ 
+    
+        
+        Object[] temp = items.toArray();
+
+        System.out.println("Yo so I'm trying to make an Array, can we like do that plz?  " + temp);
+
+        // for ( PriorityNode<T> c : items){
+        //     System.out.println(c + " " + item);
+        //     if (c.item() == item){
+        //         c.priority(priority) = priority;
+        //     }
+        // }        
     }
-//  Here's the code from the DoubleMapMinPQ
-//    double oldPriority = itemToPriority.get(item);
-//        if (priority != oldPriority) {
-//        Set<T> itemsWithOldPriority = priorityToItem.get(oldPriority);
-//        itemsWithOldPriority.remove(item);
-//        if (itemsWithOldPriority.isEmpty()) {
-//            priorityToItem.remove(oldPriority);
-//        }
-//        itemToPriority.remove(item);
-//        add(item, priority);
-//    }
 
     @Override
     public int size() {

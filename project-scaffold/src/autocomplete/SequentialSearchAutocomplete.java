@@ -52,8 +52,7 @@ public class SequentialSearchAutocomplete implements Autocomplete {
             // check to see if it matches
 
             boolean length_check = e.length() >= prefix.length();
-            double difference = CharSequence.compare
-                                (e.subSequence(0, prefix.length()), prefix);
+            double difference = CharSequence.compare(e.subSequence(0, prefix.length()), prefix);
             
             if(length_check && difference == 0) {
                 matches.add(e);
