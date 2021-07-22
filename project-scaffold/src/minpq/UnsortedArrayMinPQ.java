@@ -107,9 +107,9 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
  
     
         
-        Object[] temp = items.toArray();
+        // Object[] temp = items.toArray();
 
-        System.out.println("Yo so I'm trying to make an Array, can we like do that plz?  " + temp);
+        System.out.println("Yo so I'm trying to make an Array, can we like do that plz?  " + items.toString());
 
         // for ( PriorityNode<T> c : items){
         //     System.out.println(c + " " + item);
