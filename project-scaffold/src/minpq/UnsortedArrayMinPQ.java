@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.graalvm.compiler.nodes.ProxyNode;
 
 /**
  * Unsorted array (or {@link ArrayList}) implementation of the {@link ExtrinsicMinPQ} interface.
