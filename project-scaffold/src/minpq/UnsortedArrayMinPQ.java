@@ -36,7 +36,7 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
     @Override
     public boolean contains(T item) {
         List<PriorityNode<T>> temp = new ArrayList<>(items);
-        for ( PriorityNode<T> c : temp){
+        for (PriorityNode<T> c : temp){
             if (c.item() == item){
                 return true;
             }
@@ -52,6 +52,7 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
         double min = -1.0;
         T temp = null;
         for(PriorityNode<T> c : items) {
+            // Remove this after debugging
             System.out.println(c);
             if(min < 0) {
                 min = c.priority();
@@ -70,7 +71,14 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (isEmpty()) {
             throw new NoSuchElementException("PQ is empty");
         }
-        return null;
+       T minVal = peekMin();
+       for(PriorityNode<T> c : items) {
+           if(c.item() == minVal) {
+               items.remove(c);
+               return minVal;
+           }
+       }
+       return null;
     }
 
     @Override
@@ -78,8 +86,7 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (!contains(item)) {
             throw new NoSuchElementException("PQ does not contain " + item);
         }
-        List<PriorityNode<T>> temp = new ArrayList<>();
-        PriorityNode<T> n = new PriorityNode<>(item, priority);
+        System.out.println(items);
         for(PriorityNode<T> c : items) {
             if(c.item() == item) {
                 c.setPriority(priority);
