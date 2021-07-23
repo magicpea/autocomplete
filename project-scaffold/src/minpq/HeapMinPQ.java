@@ -28,18 +28,25 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         pq = new PriorityQueue<>(Comparator.comparingDouble(PriorityNode::priority));
     }
 
+    // Not sure if I did this correctly
     @Override
     public void add(T item, double priority) {
         if (contains(item)) {
             throw new IllegalArgumentException("Already contains " + item);
         }
-        System.out.println(pq.toString());
+        PriorityNode<T> temp = new PriorityNode<>(item, priority);
+        pq.add(temp);
     }
 
     @Override
     public boolean contains(T item) {
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        PriorityQueue<PriorityNode<T>> temp = new PriorityQueue<>(pq);
+        for(PriorityNode<T> c : temp) {
+            if(c.item() == item) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
