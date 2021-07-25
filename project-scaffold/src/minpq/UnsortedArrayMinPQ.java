@@ -52,8 +52,6 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
         double min = -1.0;
         T temp = null;
         for(PriorityNode<T> c : items) {
-            // Remove this after debugging
-            System.out.println(c);
             if(min < 0) {
                 min = c.priority();
                 temp = c.item();
@@ -86,7 +84,6 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (!contains(item)) {
             throw new NoSuchElementException("PQ does not contain " + item);
         }
-        System.out.println(items);
         for(PriorityNode<T> c : items) {
             if(c.item() == item) {
                 c.setPriority(priority);
