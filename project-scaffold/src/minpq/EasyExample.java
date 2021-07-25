@@ -14,12 +14,18 @@ public class EasyExample  {
         pq.add("4", 4.0);
         pq.add("5", 5.0);
         pq.add("6", 6.0);
+        System.out.println(pq.contains("35"));
+        System.out.println(pq.contains("2"));
+        
+        System.out.println(pq.peekMin());
         // Call methods to evaluate behavior.
-//        pq.changePriority("3", 0.0);
-//        pq.changePriority("1", 7.0);
-//        System.out.println("Min is : " + pq.peekMin());
-//         while (!pq.isEmpty()) {
-//             System.out.println(pq.removeMin());
-//         }
+
+        pq.changePriority("3", 0.0);
+        pq.changePriority("1", 7.0);
+        
+        System.out.println("Min is : " + pq.peekMin());
+         while (!pq.isEmpty()) {
+             System.out.println(pq.removeMin());
+         }
     }
 }

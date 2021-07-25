@@ -1,5 +1,6 @@
 package minpq;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
@@ -28,25 +29,28 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         pq = new PriorityQueue<>(Comparator.comparingDouble(PriorityNode::priority));
     }
 
-    // Not sure if I did this correctly
+
     @Override
     public void add(T item, double priority) {
         if (contains(item)) {
             throw new IllegalArgumentException("Already contains " + item);
         }
-        PriorityNode<T> temp = new PriorityNode<>(item, priority);
-        pq.add(temp);
+        pq.add(new PriorityNode<>(item, priority));
+        System.out.println(pq);
     }
 
     @Override
     public boolean contains(T item) {
         PriorityQueue<PriorityNode<T>> temp = new PriorityQueue<>(pq);
-        for(PriorityNode<T> c : temp) {
-            if(c.item() == item) {
-                return true;
-            }
-        }
-        return false;
+        // for (PriorityNode<T> c : temp){
+        //     if (c.item() == item){
+        //         return true;
+        //     }
+        // }
+        // return false;
+        
+        
+        return pq.contains(new PriorityNode<>(item, -1));
     }
 
     @Override
@@ -54,17 +58,22 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (isEmpty()) {
             throw new NoSuchElementException("PQ is empty");
         }
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        return pq.peek().item();  
     }
 
     @Override
     public T removeMin() {
-        if (isEmpty()) {
+        if (pq.isEmpty()) {
             throw new NoSuchElementException("PQ is empty");
         }
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        T minVal = peekMin();
+       for(PriorityNode<T> c : pq) {
+           if(c.item() == minVal) {
+               pq.remove(c);
+               return minVal;
+           }
+       }
+       return null;
     }
 
     @Override
@@ -72,13 +81,16 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (!contains(item)) {
             throw new NoSuchElementException("PQ does not contain " + item);
         }
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        for(PriorityNode<T> c : pq) {
+            System.out.println(c.item());
+            if(c.item() == item) {
+                c.setPriority(priority);
+            }
+        }
     }
 
     @Override
     public int size() {
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        return pq.size();
     }
 }
