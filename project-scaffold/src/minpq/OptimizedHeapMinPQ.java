@@ -49,26 +49,19 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         // UPDATE THE MAP DO NOT FORGET TO DO THIS !!!!!!!!!!!!
         swim(items.size() - 1);
         System.out.println("Priority node list: " + items);
-//        itemToIndex.put(temp.item() , items.indexOf(temp));
+        itemToIndex.put(temp.item() , items.indexOf(temp));
 //        for(PriorityNode<T> c : items) {
 //            itemToIndex.put(c.item() , items.indexOf(c));
 //        }
-        mapQuest(items);
+        // unecessary to rebuild map
+        // call a put method for the new index and value to update the map
+
+        // one put call here. (index of item you've added in priority queue)
+
+        // mapQuest(items);
         System.out.println("Here's the map ! : " + itemToIndex);
 
-        // Use the list to create a new map
-        // But everytime we call add(), delete the map and rebuild it
         
-        // we have a map
-        // right now we are adding the new node/priority queue index values sequentially
-
-        // we need it to be in order from least to greatest
-
-        // key: item , value: index in our priority queue of the given item
-
-        // modify the map so that indexes as keys
-
-        // 
     }
 
      private void swim(int k) {
@@ -80,12 +73,10 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
      }
 
      private void sink(int k) {
-         while (2*k <= size) {
-             int j = 2*k;
-             if (j < size && greater(j, j+1)) j++;
-             if (!greater(k, j)) break;
-             exchange(k, j);
-             k = j;
+         while (k < items.size() &&  greater(k, k + 1)) {
+             if (!greater(k, k + 1)) break;
+             exchange(k, k + 1);
+             k++;
          }
      }
 
@@ -150,39 +141,32 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (!contains(item)) {
             throw new NoSuchElementException("PQ does not contain " + item);
         }
-        // so we assume structure is already built
-        // what we want to add
-        PriorityNode<T> temp = new PriorityNode<>(item, priority); 
         
-        // get the item index from the map somehow
+        
+    
+        System.out.println("item to be changed : " + (itemToIndex.get(item)));
+        // collect our old index
+        int index = itemToIndex.get(item);
+        double oldPriority = items.get(index).priority();
+        System.out.println("old priority: " + oldPriority);
 
-        // remove at the index the node using array list
-//        int index_ismo = itemToIndex.get(item);
-//        this.items.remove(index_ismo);
-        for(PriorityNode<T> c : items) {
-            if(c.item() == item) {
-                c.setPriority(priority);
-                // update the list bc we will swim using c
-                // we need to get the index of c in items
-//                swim(itemToIndex.get(c.item()));
-//                sink(itemToIndex.get(c.item()));
-            }
-            // need to update the map !
-        }
+        System.out.println("index to be changed in map : " + (items.get(index).toString()));
+
+        // set the new priority 
+        items.get(index).setPriority(priority);
+                
+        System.out.println("updated priority: " + (items.get(index).toString()));
+                
         System.out.println("ITEMS AFTER CHANGING PRIORITY: " + items);
-        mapQuest(items);
-        // update the item of interest
-        // swim
-        // update map index as well
-    }
 
-    private void mapQuest(List<PriorityNode<T>> temp) {
-        System.out.println("On the quest!");
-//        itemToIndex.clear();
-        for(PriorityNode<T> c : temp) {
-            itemToIndex.put(c.item() , temp.indexOf(c));
+        if ( oldPriority < priority) {
+            swim(index);
+        } else if ( oldPriority > priority) {
+            sink(index); 
         }
-        System.out.println("The update map post-quest is : " + itemToIndex);
+
+
+        
     }
 
     @Override
