@@ -21,12 +21,12 @@ public class EasyExample  {
         System.out.println(pq.peekMin());
         // Call methods to evaluate behavior.
 
-//        pq.changePriority("3", 0.0);
-//        pq.changePriority("1", 7.0);
+        pq.changePriority("3", 0.0);
+        pq.changePriority("1", 7.0);
         
-//        System.out.println("Min is : " + pq.peekMin());
-//         while (!pq.isEmpty()) {
-//             System.out.println(pq.removeMin());
-//         }
+        System.out.println("Min is : " + pq.peekMin());
+         while (!pq.isEmpty() && pq.size() != 1) {
+             System.out.println(pq.removeMin());
+         }
     }
 }

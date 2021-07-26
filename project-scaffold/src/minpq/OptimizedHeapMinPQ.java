@@ -56,24 +56,24 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         items.add(temp);
         System.out.println("Here's the list beforehand : " + items);
         // UPDATE THE MAP DO NOT FORGET TO DO THIS !!!!!!!!!!!!
-        itemToIndex.put(temp.item(), (items.size() - 1));
-        swim(items.size() - 1);
-        System.out.println("Here's the map: " + itemToIndex);
-        System.out.println("Here's the list afterward : " + items);
-        // basically we have two structures to help us out
-
-        // 1. the priority queue which is an Arraylist (hard)
-
-            // our goal is to make sure that we update these two structures everytime we call add 
-
-            // additionally, we must make sure that the order of the priority queue is maintained
-            // basically make sure everything is still lowest to highest after we add a new node.
+        System.out.println("Here's the before map: " + itemToIndex);
         
-            // how do we do this you might ask?
+        swim(items.size() - 1);
+        
+        itemToIndex.put(temp.item() , items.size() - 1);
+        System.out.println("Here's the after map: " + itemToIndex);
+        System.out.println("Here's the list afterward : " + items);
+        
+        // we have a map
+        // right now we are adding the new node/priority queue index values sequentially
 
-            // basically sinking and swimmming
+        // we need it to be in order from least to greatest
 
-        // 2. the map of <item, index> (easy once 1. is done)
+        // key: item , value: index in our priority queue of the given item
+
+        // modify the map so that indexes as keys
+
+        // 
     }
 
      private void swim(int k) {
@@ -112,17 +112,7 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
          System.out.println("item j is: " + items.get(j));
      }
 
-    // // is pq[1..n] a min heap?
-    // private boolean isMinHeap() {
-    //     for (int i = 1; i <= n; i++) {
-    //         if (pq[i] == null) return false;
-    //     }
-    //     for (int i = n+1; i < pq.length; i++) {
-    //         if (pq[i] != null) return false;
-    //     }
-    //     if (pq[0] != null) return false;
-    //     return isMinHeapOrdered(1);
-    // }
+    
 
     @Override
     public boolean contains(T item) {
@@ -130,24 +120,13 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     }
 
     @Override
+    // worst case runtime : BigTheta(1)
     public T peekMin() {
         if (isEmpty()) {
             throw new NoSuchElementException("PQ is empty");
         }
-        // taking advantage of unsorted ArrayMinPQ :)
-        double min = -1.0;
-        T temp = null;
-        for(PriorityNode<T> c : items) {
-            if(min < 0) {
-                min = c.priority();
-                temp = c.item();
-            }
-            if(c.priority() < min) {
-                min = c.priority();
-                temp = c.item();
-            }
-        }
-         return temp;
+        
+        return items.get(1).item();
 
     }
 
@@ -155,7 +134,7 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     // DoNE ?
 
     public T removeMin() {
-        if (isEmpty()) {
+        if (isEmpty() || items.size() == 1) {
             throw new NoSuchElementException("PQ is empty");
         }
         // this one is chill as we remove the first element
@@ -180,13 +159,32 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (!contains(item)) {
             throw new NoSuchElementException("PQ does not contain " + item);
         }
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        // so we assume structure is already built
+        // what we want to add
+        PriorityNode<T> temp = new PriorityNode<>(item, priority); 
+        
+        // get the item index from the map somehow
+
+        // remove at the index the node using array list
+        System.out.println("b4: " + items.toString());
+        int index_ismo = itemToIndex.get(item);
+        System.out.println(index_ismo);
+        this.items.remove(index_ismo);
+        System.out.println("after 6-week cs course gainz: " + items.toString());
+
+
+
+
+        // update the item of interest
+
+        // swim
+
+        // update map index as well
     }
 
     @Override
     // Done!
     public int size() {
-        return size;
+        return items.size();
     }
 }

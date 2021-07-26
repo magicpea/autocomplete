@@ -31,7 +31,8 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     /**
      * HeapMinPQ add:
-     * @param item- node value, priority- node priority
+     * @param item node value
+     * @param priority node priority
      * summary : this method adds a new priority node to the priority queue
      * pre : given an existing priority item and priority value
      * post : create a new node to be added to the priority queue, 
@@ -85,21 +86,36 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
      * HeapMinPQ removeMin:
      * summary : this method removes and returns the lowest priority item from our priority queue
      * pre : given a non-empty priority queue, otherwise throws an empty exception
-     * post : returns the 
+     * post : removes and returns the lowest priority item value from the priority queue
+     * 
+     * Worst Case Runtime: BigTheta(N * log(N)) *according to the internet? 
     */
     @Override
     public T removeMin() {
         if (pq.isEmpty()) {
             throw new NoSuchElementException("PQ is empty");
         }
-    return (T) pq.poll(); 
+        
+        T min = peekMin();
+        
+        // removes the min
+        pq.poll(); 
+        return min;
     }
 
-    /** @param terms collection containing elements to be added
-     * summary : this method adds all of the terms within the parameter into the
-     * the final list of terms
-     * pre : this.terms is empty
-     * post : this.terms is full of CharSequences from the parameter
+    /** 
+     * HeapMinPQ changePriority
+     * @param item node value
+     * @param priority node priority
+     * summary : given the item exists in the queue,
+     *           updates an item's priority in the priority queue
+     *           with the new priority value.
+     *           
+     * pre : if a node of a certain item value exists in the priority queue, 
+     *       otherwise throws an does not contain exception
+     * post : the node of iterest's priority is changed in the priority queue.
+     * 
+     * Worst Case Runtime: BigTheta(N) *iterates over whole priority queue.
     */
     @Override
     public void changePriority(T item, double priority) {
@@ -113,11 +129,13 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         }
     }
 
-    /** @param terms collection containing elements to be added
-     * summary : this method adds all of the terms within the parameter into the
-     * the final list of terms
-     * pre : this.terms is empty
-     * post : this.terms is full of CharSequences from the parameter
+    /** 
+     * HeapMinPQ size: 
+     * summary : this method returns the number of elements in the priority queue
+     * pre : given a priority queue
+     * post : returns the number of priority nodes in the priority queue.
+     * 
+     * Worst Case Runtime: BigTheta(1) or BigTheta(N) ?
     */
     @Override
     public int size() {
