@@ -38,31 +38,26 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (contains(item)) {
             throw new IllegalArgumentException("Already contains " + item);
         }
-        // We need to add to the map the <item, index>
-        // PriorityNode<T> temp = new PriorityNode<>(item, priority);
-        // int i = items.indexOf(temp);
-        // // Resizing situation
-        // // Now, let's add the key-val pair to the map
-        // itemToIndex.put(temp.item(), i);
-        // swim(size);
-        // assert isMinHeap();
-        // Let's start with this unsorted
         PriorityNode<T> temp = new PriorityNode<>(item, priority);
         PriorityNode<T> tempFirst = new PriorityNode<T>(null, 0);
+        // Dummy variables here for now (might delete l8r) :
         if(items.isEmpty() && itemToIndex.isEmpty()) {
             items.add(tempFirst);
             itemToIndex.put(null, null);
         }
         items.add(temp);
-        System.out.println("Here's the list beforehand : " + items);
         // UPDATE THE MAP DO NOT FORGET TO DO THIS !!!!!!!!!!!!
-        System.out.println("Here's the before map: " + itemToIndex);
-        
         swim(items.size() - 1);
-        
-        itemToIndex.put(temp.item() , items.size() - 1);
-        System.out.println("Here's the after map: " + itemToIndex);
-        System.out.println("Here's the list afterward : " + items);
+        System.out.println("Priority node list: " + items);
+//        itemToIndex.put(temp.item() , items.indexOf(temp));
+//        for(PriorityNode<T> c : items) {
+//            itemToIndex.put(c.item() , items.indexOf(c));
+//        }
+        mapQuest(items);
+        System.out.println("Here's the map ! : " + itemToIndex);
+
+        // Use the list to create a new map
+        // But everytime we call add(), delete the map and rebuild it
         
         // we have a map
         // right now we are adding the new node/priority queue index values sequentially
@@ -77,7 +72,6 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     }
 
      private void swim(int k) {
-        System.out.println("K is: " + k + " && k - 1 is: " + (k - 1));
          while (k > 1 && greater(k - 1, k)) {
              exchange(k, k - 1);
              k = k - 1;
@@ -101,15 +95,10 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
      }
 
      private void exchange(int i, int j) {
-         System.out.println("Parent trap to follow");
-         System.out.println("item i is: " + items.get(i));
-         System.out.println("item j is: " + items.get(j));
          PriorityNode<T> tempI = new PriorityNode<>(items.get(i).item(), items.get(i).priority());
          PriorityNode<T> tempJ = new PriorityNode<>(items.get(j).item(), items.get(j).priority());
          items.set(i, tempJ);
          items.set(j, tempI);
-         System.out.println("item i is: " + items.get(i));
-         System.out.println("item j is: " + items.get(j));
      }
 
     
@@ -156,6 +145,8 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     @Override
     public void changePriority(T item, double priority) {
+        System.out.println("Changing priority of: " + item + " to: " + priority);
+        System.out.println("ITEMS BEFORE CHANGING PRIORITY: " + items);
         if (!contains(item)) {
             throw new NoSuchElementException("PQ does not contain " + item);
         }
@@ -166,20 +157,32 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         // get the item index from the map somehow
 
         // remove at the index the node using array list
-        System.out.println("b4: " + items.toString());
-        int index_ismo = itemToIndex.get(item);
-        System.out.println(index_ismo);
-        this.items.remove(index_ismo);
-        System.out.println("after 6-week cs course gainz: " + items.toString());
-
-
-
-
+//        int index_ismo = itemToIndex.get(item);
+//        this.items.remove(index_ismo);
+        for(PriorityNode<T> c : items) {
+            if(c.item() == item) {
+                c.setPriority(priority);
+                // update the list bc we will swim using c
+                // we need to get the index of c in items
+//                swim(itemToIndex.get(c.item()));
+//                sink(itemToIndex.get(c.item()));
+            }
+            // need to update the map !
+        }
+        System.out.println("ITEMS AFTER CHANGING PRIORITY: " + items);
+        mapQuest(items);
         // update the item of interest
-
         // swim
-
         // update map index as well
+    }
+
+    private void mapQuest(List<PriorityNode<T>> temp) {
+        System.out.println("On the quest!");
+//        itemToIndex.clear();
+        for(PriorityNode<T> c : temp) {
+            itemToIndex.put(c.item() , temp.indexOf(c));
+        }
+        System.out.println("The update map post-quest is : " + itemToIndex);
     }
 
     @Override
