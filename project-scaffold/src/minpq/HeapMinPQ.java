@@ -36,20 +36,11 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
             throw new IllegalArgumentException("Already contains " + item);
         }
         pq.add(new PriorityNode<>(item, priority));
-        System.out.println(pq);
     }
 
     @Override
     public boolean contains(T item) {
-        PriorityQueue<PriorityNode<T>> temp = new PriorityQueue<>(pq);
-        // for (PriorityNode<T> c : temp){
-        //     if (c.item() == item){
-        //         return true;
-        //     }
-        // }
-        // return false;
-        
-        
+        // No big deal:
         return pq.contains(new PriorityNode<>(item, -1));
     }
 
@@ -82,7 +73,6 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
             throw new NoSuchElementException("PQ does not contain " + item);
         }
         for(PriorityNode<T> c : pq) {
-            System.out.println(c.item());
             if(c.item() == item) {
                 c.setPriority(priority);
             }
