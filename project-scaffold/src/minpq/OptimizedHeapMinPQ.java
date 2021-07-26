@@ -22,6 +22,9 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
      */
     private int size;
 
+    // Not sure wtf this is but we shall see
+    private Comparator<Double> comparator;
+
     /**
      * Constructs an empty instance.
      */
@@ -43,7 +46,20 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         // itemToIndex.put(temp.item(), i);
         // swim(size);
         // assert isMinHeap();
-
+        // Let's start with this unsorted
+        PriorityNode<T> temp = new PriorityNode<>(item, priority);
+        PriorityNode<T> tempFirst = new PriorityNode<T>(null, 0);
+        if(items.isEmpty() && itemToIndex.isEmpty()) {
+            items.add(tempFirst);
+            itemToIndex.put(null, null);
+        }
+        items.add(temp);
+        System.out.println("Here's the list beforehand : " + items);
+        // UPDATE THE MAP DO NOT FORGET TO DO THIS !!!!!!!!!!!!
+        itemToIndex.put(temp.item(), (items.size() - 1));
+        swim(items.size() - 1);
+        System.out.println("Here's the map: " + itemToIndex);
+        System.out.println("Here's the list afterward : " + items);
         // basically we have two structures to help us out
 
         // 1. the priority queue which is an Arraylist (hard)
@@ -58,52 +74,43 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
             // basically sinking and swimmming
 
         // 2. the map of <item, index> (easy once 1. is done)
-
-        
-
-        // 
-
     }
-//    public void insert(Key x) {
-//        // double size of array if necessary
-//        if (n == pq.length - 1) resize(2 * pq.length);
-//
-//        // add x, and percolate it up to maintain heap invariant
-//        pq[++n] = x;
-//        swim(n);
-//        assert isMinHeap();
 
-    // private void swim(int k) {
-    //     while (k > 1 && greater(k/2, k)) {
-    //         exch(k, k/2);
-    //         k = k/2;
-    //     }
-    // }
+     private void swim(int k) {
+        System.out.println("K is: " + k + " && k - 1 is: " + (k - 1));
+         while (k > 1 && greater(k - 1, k)) {
+             exchange(k, k - 1);
+             k = k - 1;
+         }
+         System.out.println("");
+     }
 
-    // private void sink(int k) {
-    //     while (2*k <= size) {
-    //         int j = 2*k;
-    //         if (j < size && greater(j, j+1)) j++;
-    //         if (!greater(k, j)) break;
-    //         exch(k, j);
-    //         k = j;
-    //     }
-    // }
+     private void sink(int k) {
+         while (2*k <= size) {
+             int j = 2*k;
+             if (j < size && greater(j, j+1)) j++;
+             if (!greater(k, j)) break;
+             exchange(k, j);
+             k = j;
+         }
+     }
 
-    // private boolean greater(int i, int j) {
-    //     if (comparator == null) {
-    //         return ((Comparable<Key>) pq[i]).compareTo(pq[j]) > 0;
-    //     }
-    //     else {
-    //         return comparator.compare(pq[i], pq[j]) > 0;
-    //     }
-    // }
+    // Comparing the priorities as a means to reset the index
+     private boolean greater(int i, int j) {
+         return (items.get(i).priority() > items.get(j).priority());
+     }
 
-    // private void exch(int i, int j) {
-    //     Key swap = pq[i];
-    //     pq[i] = pq[j];
-    //     pq[j] = swap;
-    // }
+     private void exchange(int i, int j) {
+         System.out.println("Parent trap to follow");
+         System.out.println("item i is: " + items.get(i));
+         System.out.println("item j is: " + items.get(j));
+         PriorityNode<T> tempI = new PriorityNode<>(items.get(i).item(), items.get(i).priority());
+         PriorityNode<T> tempJ = new PriorityNode<>(items.get(j).item(), items.get(j).priority());
+         items.set(i, tempJ);
+         items.set(j, tempI);
+         System.out.println("item i is: " + items.get(i));
+         System.out.println("item j is: " + items.get(j));
+     }
 
     // // is pq[1..n] a min heap?
     // private boolean isMinHeap() {
@@ -119,9 +126,7 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     @Override
     public boolean contains(T item) {
-        // iterator method I think?
-        boolean cake = false;
-        return cake;
+        return itemToIndex.containsKey(item);
     }
 
     @Override
@@ -143,7 +148,7 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
             }
         }
          return temp;
-        
+
     }
 
     @Override
