@@ -29,24 +29,50 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         pq = new PriorityQueue<>(Comparator.comparingDouble(PriorityNode::priority));
     }
 
-
+    /**
+     * HeapMinPQ add:
+     * @param item- node value, priority- node priority
+     * summary : this method adds a new priority node to the priority queue
+     * pre : given an existing priority item and priority value
+     * post : create a new node to be added to the priority queue, 
+     *        increasing its size by one node.
+     * 
+     * Worst Case Runtime: BigTheta(log(N))
+     */
     @Override
-    public void add(T item, double priority) {
+     public void add(T item, double priority) {
         if (contains(item)) {
             throw new IllegalArgumentException("Already contains " + item);
         }
         pq.add(new PriorityNode<>(item, priority));
     }
 
+
+    /** 
+     * HeapMinPQ contains:
+     * @param item node value
+     * summary : this method checks if our given item
+     *           is in our priority queue.
+     * pre : given our item value, we check to see if we can find it in the priority queue
+     * post : Returns True or False if our item is in the priority queue.
+     * 
+     * Worst Case Runtime:  BigTheta(N) opperation 
+    */
     @Override
     public boolean contains(T item) {
-<<<<<<< HEAD
-        // No big deal:
-=======
->>>>>>> fdf1ea907f88051ffc64d67798761da0b8b76ab9
         return pq.contains(new PriorityNode<>(item, -1));
     }
 
+    /** 
+     * HeapMinPQ peekMin:
+     * summary : this method returns the lowest priority item value from our priority queue
+     *           without modifying the priority queue structure
+     * pre : given a non-empty priority queue, otherwise throws a exception
+     *       if our priority queue is empty
+     * post : returns the item value for the lowest priority node in our priority queue
+     * 
+     * Worst Case Runtime:  BigTheta(1) opperation
+    */
     @Override
     public T peekMin() {
         if (isEmpty()) {
@@ -54,22 +80,27 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         }
         return pq.peek().item();  
     }
-
+    
+    /** 
+     * HeapMinPQ removeMin:
+     * summary : this method removes and returns the lowest priority item from our priority queue
+     * pre : given a non-empty priority queue, otherwise throws an empty exception
+     * post : returns the 
+    */
     @Override
     public T removeMin() {
         if (pq.isEmpty()) {
             throw new NoSuchElementException("PQ is empty");
         }
-        T minVal = peekMin();
-       for(PriorityNode<T> c : pq) {
-           if(c.item() == minVal) {
-               pq.remove(c);
-               return minVal;
-           }
-       }
-       return null;
+    return (T) pq.poll(); 
     }
 
+    /** @param terms collection containing elements to be added
+     * summary : this method adds all of the terms within the parameter into the
+     * the final list of terms
+     * pre : this.terms is empty
+     * post : this.terms is full of CharSequences from the parameter
+    */
     @Override
     public void changePriority(T item, double priority) {
         if (!contains(item)) {
@@ -82,6 +113,12 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         }
     }
 
+    /** @param terms collection containing elements to be added
+     * summary : this method adds all of the terms within the parameter into the
+     * the final list of terms
+     * pre : this.terms is empty
+     * post : this.terms is full of CharSequences from the parameter
+    */
     @Override
     public int size() {
         return pq.size();
