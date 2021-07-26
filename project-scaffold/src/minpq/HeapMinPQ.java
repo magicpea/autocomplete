@@ -40,7 +40,10 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     @Override
     public boolean contains(T item) {
+<<<<<<< HEAD
         // No big deal:
+=======
+>>>>>>> fdf1ea907f88051ffc64d67798761da0b8b76ab9
         return pq.contains(new PriorityNode<>(item, -1));
     }
 
