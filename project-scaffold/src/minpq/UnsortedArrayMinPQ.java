@@ -24,6 +24,17 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
         items = new ArrayList<>();
     }
 
+    /**
+     * UnsortedArrayMinPQ add:
+     * @param item- node value
+     * @param priority- node priority
+     * summary : adds new priority node to the pq
+     * pre : given an existing priority item and priority value
+     * post : create a new node to be added to the priority queue,
+     *        increasing its size by one node.
+     *
+     * Worst Case Runtime: BigTheta(log(N))
+     */
     @Override
     public void add(T item, double priority) {
         if (contains(item)) {
@@ -33,6 +44,16 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
         items.add(temp);
     }
 
+    /**
+     * UnsortedArrayMinPQ contains:
+     * @param item node value
+     * summary : this method checks if our given item
+     *           is in our pq
+     * pre : given our item value, we check to see if we can find it in the priority queue
+     * post : Returns True or False if our item is in the priority queue
+     *
+     * Worst Case Runtime:  BigTheta(N)
+     */
     @Override
     public boolean contains(T item) {
         List<PriorityNode<T>> temp = new ArrayList<>(items);
@@ -44,6 +65,16 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
         return false;
     }
 
+    /**
+     * UnsortedArrayMinPQ peekMin:
+     * summary : this method returns the lowest priority item value from our priority queue
+     *           without modifying the priority queue structure
+     * pre : given a non-empty priority queue, otherwise throws a exception
+     *       if our priority queue is empty
+     * post : returns the item value for the lowest priority node in our priority queue
+     *
+     * Worst Case Runtime:  BigTheta(N)
+     */
     @Override
     public T peekMin() {
         if (isEmpty()) {
@@ -64,6 +95,14 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
          return temp;
     }
 
+    /**
+     * UnsortedArrayMinPQ  removeMin:
+     * summary : this method removes and returns the lowest priority item from our priority queue
+     * pre : given a non-empty priority queue, otherwise throws an empty exception
+     * post : returns the min value
+     *
+     * Worst Case Runtime:  BigTheta(N)
+     */
     @Override
     public T removeMin() {
         if (isEmpty()) {
@@ -79,6 +118,14 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
        return null;
     }
 
+    /** @param item- node value
+     * @param priority- node priority
+     * summary : changes the priority of the node with the given item
+     * pre : the item priority is unchanged
+     * post : the item priority is changed to the parameter priority
+     *
+     * Worst-case runtime: BigTheta(N)
+     */
     @Override
     public void changePriority(T item, double priority) {
         if (!contains(item)) {
