@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a039a8f8-0f00-4a92-847d-32db31778a15" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/autocomplete.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dylan project-scaffold.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project-scaffold/project-scaffold1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Dylan project-scaffold1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../out/production/Dylan project-scaffold/Dylan project-scaffold1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../project-scaffold/project-scaffold.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/autocomplete/autocomplete/SequentialSearchAutocomplete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/autocomplete/autocomplete/SequentialSearchAutocomplete.java" afterDir="false" />
-    </list>
+    <list default="true" id="a039a8f8-0f00-4a92-847d-32db31778a15" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

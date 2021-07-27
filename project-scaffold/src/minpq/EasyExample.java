@@ -9,12 +9,14 @@ public class EasyExample  {
 //        ExtrinsicMinPQ<String> pq = new DoubleMapMinPQ<>();
         ExtrinsicMinPQ<String> pq = new OptimizedHeapMinPQ<>();
         pq.add("11", 70.0);
+        pq.add("24", 69.0);
         pq.add("1", 1.0);
         pq.add("2", 2.0);
         pq.add("4", 4.0);
         pq.add("6", 6.0);
         pq.add("3", 3.0);
         pq.add("5", 5.0);
+        pq.add("48", 82.0);
         System.out.println(pq.contains("35"));
         System.out.println(pq.contains("2"));
         

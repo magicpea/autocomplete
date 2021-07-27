@@ -40,27 +40,20 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         }
         PriorityNode<T> temp = new PriorityNode<>(item, priority);
         PriorityNode<T> tempFirst = new PriorityNode<T>(null, 0);
-        // Dummy variables here for now (might delete l8r) :
         if(items.isEmpty() && itemToIndex.isEmpty()) {
             items.add(tempFirst);
             itemToIndex.put(null, null);
         }
         items.add(temp);
-        // UPDATE THE MAP DO NOT FORGET TO DO THIS !!!!!!!!!!!!
+        sink(0);
         swim(items.size() - 1);
-        System.out.println("Priority node list: " + items);
-        itemToIndex.put(temp.item() , items.indexOf(temp));
-//        for(PriorityNode<T> c : items) {
-//            itemToIndex.put(c.item() , items.indexOf(c));
-//        }
-        // unecessary to rebuild map
-        // call a put method for the new index and value to update the map
 
-        // one put call here. (index of item you've added in priority queue)
-
-        // mapQuest(items);
+        PriorityNode<T> wtf = new PriorityNode<>(item, temp.priority());
+        int index = items.indexOf(wtf);
+        // Having trouble deciding what to put in items.indexOf()
+        itemToIndex.put(temp.item(), index);
         System.out.println("Here's the map ! : " + itemToIndex);
-
+        System.out.println(items);
         
     }
 
@@ -117,56 +110,27 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (isEmpty() || items.size() == 1) {
             throw new NoSuchElementException("PQ is empty");
         }
-        // this one is chill as we remove the first element
-        // also Sarah recomended starting the array indexing at a[1] instead of a[0]
-
-        // save that min value
         T homeSlice = items.get(1).item();
-
-        // basically update the following
-    
-        // map- hash map with keys being indexes
         itemToIndex.remove(1);
-
-        // priorityqueue - arraylist my dudes, drop an index in the chat
         items.remove(1);
-
         return homeSlice;
     }
 
     @Override
     public void changePriority(T item, double priority) {
-        System.out.println("Changing priority of: " + item + " to: " + priority);
-        System.out.println("ITEMS BEFORE CHANGING PRIORITY: " + items);
+        System.out.println("MAP B4: " + itemToIndex);
         if (!contains(item)) {
             throw new NoSuchElementException("PQ does not contain " + item);
         }
-        
-        
-    
-        System.out.println("item to be changed : " + (itemToIndex.get(item)));
-        // collect our old index
         int index = itemToIndex.get(item);
         double oldPriority = items.get(index).priority();
-        System.out.println("old priority: " + oldPriority);
-
-        System.out.println("index to be changed in map : " + (items.get(index).toString()));
-
-        // set the new priority 
         items.get(index).setPriority(priority);
-                
-        System.out.println("updated priority: " + (items.get(index).toString()));
-                
-        System.out.println("ITEMS AFTER CHANGING PRIORITY: " + items);
-
-        if ( oldPriority < priority) {
+        if (oldPriority < priority) {
+            sink(index);
+        } else if (oldPriority > priority) {
             swim(index);
-        } else if ( oldPriority > priority) {
-            sink(index); 
         }
-
-
-        
+        itemToIndex.put(item, items.indexOf(new PriorityNode<>(item, priority)));
     }
 
     @Override
