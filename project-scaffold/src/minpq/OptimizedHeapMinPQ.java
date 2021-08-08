@@ -186,6 +186,7 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         items.remove(1);
         return homeSlice;
     }
+    
     /** 
      * OptimizedHeapMinPQ changePriority:
      * @param item node value
@@ -200,7 +201,7 @@ public class OptimizedHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
      * post : the node of iterest's priority is changed in the priority queue.
      *        as well as corresponding index in itemToIndex.
      * 
-     * Worst Case Runtime: BigTheta(N * log(N)) recursively sinking/swiming
+     * Worst Case Runtime: BigTheta(N * log(N) + 1) recursively sinking/swiming
     */
     @Override
     public void changePriority(T item, double priority) {

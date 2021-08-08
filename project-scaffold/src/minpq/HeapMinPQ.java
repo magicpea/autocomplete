@@ -88,7 +88,7 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
      * pre : given a non-empty priority queue, otherwise throws an empty exception
      * post : removes and returns the lowest priority item value from the priority queue
      * 
-     * Worst Case Runtime: BigTheta(N * log(N)) *according to the internet? 
+     * Worst Case Runtime: BigTheta(1 + log(N))
     */
     @Override
     public T removeMin() {
@@ -104,7 +104,7 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     }
 
     /** 
-     * HeapMinPQ changePriority
+     * HeapMinPQ changePriority:
      * @param item node value
      * @param priority node priority
      * summary : given the item exists in the queue,
@@ -135,7 +135,7 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
      * pre : given a priority queue
      * post : returns the number of priority nodes in the priority queue.
      * 
-     * Worst Case Runtime: BigTheta(1) or BigTheta(N) ?
+     * Worst Case Runtime: BigTheta(1)
     */
     @Override
     public int size() {
