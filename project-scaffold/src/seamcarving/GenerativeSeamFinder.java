@@ -53,6 +53,9 @@ public class GenerativeSeamFinder implements SeamFinder {
      * @see EnergyFunction
      */
     private static class PixelGraph implements Graph<Node> {
+        
+        private final Pixel[][] pixels;
+
         /**
          * The {@link Picture} for {@link #neighbors(Node)}.
          */
@@ -67,8 +70,13 @@ public class GenerativeSeamFinder implements SeamFinder {
         private final Node source = new Node() {
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code
-                throw new UnsupportedOperationException("Not implemented yet");
+                
+                List<Edge<Node>> result = new ArrayList<>(picture.height());
+                for (int j = 0; j < picture.height(); j += 1) {
+                    Pixel to = pixels[0][j];
+                    result.add(new Edge<>(this, to, f.apply(picture, 0, j)));
+                }
+                return result;
             }
         };
         /**
@@ -77,8 +85,7 @@ public class GenerativeSeamFinder implements SeamFinder {
         private final Node sink = new Node() {
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code
-                throw new UnsupportedOperationException("Not implemented yet");
+                return List.of(); // Sink has no neighbors
             }
         };
 
@@ -124,8 +131,7 @@ public class GenerativeSeamFinder implements SeamFinder {
 
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code
-                throw new UnsupportedOperationException("Not implemented yet");
+                return node.neighbors(picture, f);
             }
 
             @Override
