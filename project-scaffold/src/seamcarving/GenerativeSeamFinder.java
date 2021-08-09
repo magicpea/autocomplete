@@ -54,6 +54,10 @@ public class GenerativeSeamFinder implements SeamFinder {
      */
     private static class PixelGraph implements Graph<Node> {
         /**
+         * The {@link Pixel} vertices in the {@link Picture}.
+         */
+        private final Pixel[][] pixels;
+        /**
          * The {@link Picture} for {@link #neighbors(Node)}.
          */
         private final Picture picture;
@@ -66,19 +70,24 @@ public class GenerativeSeamFinder implements SeamFinder {
          */
         private final Node source = new Node() {
             @Override
+            // YES WE ALSO NEED TO DO THIS METHOD
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code
-                throw new UnsupportedOperationException("Not implemented yet");
+                List<Edge<Node>> result = new ArrayList<>(picture.height());
+                for (int j = 0; j < picture.height(); j += 1) {
+                    Pixel to = pixels[0][j];
+                    result.add(new Edge<>(this, to, f.apply(picture, 0, j)));
+                }
+                return result;
             }
         };
         /**
          * Sink {@link Node} for the adjacency list graph.
          */
+        // YES WE NEED TO DO THIS
         private final Node sink = new Node() {
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code
-                throw new UnsupportedOperationException("Not implemented yet");
+                return List.of(); // Sink has no neighbors
             }
         };
 
@@ -90,10 +99,32 @@ public class GenerativeSeamFinder implements SeamFinder {
          * @param f       the input energy function.
          */
         private PixelGraph(Picture picture, EnergyFunction f) {
+            this.pixels = new Pixel[picture.width()][picture.height()];
+            // Starting from the rightmost column, each pixel has only a single edge to the sink (with 0 weight).
+            for (int y = 0; y < picture.height(); y += 1) {
+                Pixel from = new Pixel(picture.width() - 1, y);
+                pixels[picture.width() - 1][y] = from;
+            }
+            // Starting from the next-rightmost column...
+            for (int x = picture.width() - 2; x >= 0; x -= 1) {
+                // Consider each pixel in the column...
+                for (int y = 0; y < picture.height(); y += 1) {
+                    Pixel from = new Pixel(x, y);
+                    pixels[x][y] = from;
+                    // Connect the pixel to its right-up, right-middle, and right-down neighbors...
+//                    for (int z = y - 1; z <= y + 1; z += 1) {
+//                        // Only if the neighbor is in the bounds of the picture.
+//                        if (0 <= z && z < picture.height()) {
+//                            Pixel to = pixels[x + 1][z];
+//                        }
+//                    }
+                }
+            }
             this.picture = picture;
             this.f = f;
         }
 
+        // DONT OVERRIDE THIS METHOD
         @Override
         public List<Edge<Node>> neighbors(Node node) {
             return node.neighbors(picture, f);
@@ -110,6 +141,7 @@ public class GenerativeSeamFinder implements SeamFinder {
         public class Pixel implements Node {
             private final int x;
             private final int y;
+           private final List<Edge<Node>> neighbors;
 
             /**
              * Constructs a pixel representing the (<i>x</i>, <i>y</i>) indices in the picture.
@@ -120,12 +152,43 @@ public class GenerativeSeamFinder implements SeamFinder {
             public Pixel(int x, int y) {
                 this.x = x;
                 this.y = y;
+                this.neighbors = new ArrayList<>(3);
             }
 
+
+            // YES DO THIS ADD STUFF HERE
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                // TODO: Replace with your code
-                throw new UnsupportedOperationException("Not implemented yet");
+                System.out.println("Picture height is: " + picture.height());
+                System.out.println("Picture width is: " + picture.width());
+                // Starting from the rightmost column, each pixel has only a single edge to the sink (with 0 weight).
+                for (int y = 0; y < picture.height(); y += 1) {
+                    Pixel from = pixels[picture.width() - 1][y];
+                    from.neighbors.add(new Edge<>(from, sink, 0));
+                    System.out.println("Neighbors starting : " + from.neighbors);
+                }
+//                 Starting from the next-rightmost column...
+                for (int x = picture.width() - 2; x >= 0; x -= 1) {
+                    // Consider each pixel in the column...
+                    for (int y = 0; y < picture.height(); y += 1) {
+                        Pixel from = pixels[x][y];
+//                        System.out.println("Pixel FROM is: " + "(" + x + " , " + y + ")");
+                        // Connect the pixel to its right-up, right-middle, and right-down neighbors...
+                        for (int z = y - 1; z <= y + 1; z += 1) {
+                            // Only if the neighbor is in the bounds of the picture.
+                            if (0 <= z && z < picture.height()) {
+                                Pixel to = pixels[x + 1][z];
+//                                System.out.println("Pixel TO is: " + "(" + x + " , " + y + ")");
+                                from.neighbors.add(new Edge<>(from, to, f.apply(picture, x + 1, z)));
+//                                System.out.println("Neighbors : " + from.neighbors);
+                            }
+                        }
+                    }
+                }
+//                System.out.println();
+//                System.out.println("The size of neighbors is: " + neighbors.size());
+//                System.out.println("Neighbors are: " + neighbors);
+                return neighbors;
             }
 
             @Override

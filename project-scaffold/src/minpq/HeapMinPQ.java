@@ -88,16 +88,14 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
      * pre : given a non-empty priority queue, otherwise throws an empty exception
      * post : removes and returns the lowest priority item value from the priority queue
      * 
-     * Worst Case Runtime: BigTheta(N * log(N)) *according to the internet? 
+     * Worst Case Runtime: BigTheta(1 + log(N)) *according to the internet?
     */
     @Override
     public T removeMin() {
         if (pq.isEmpty()) {
             throw new NoSuchElementException("PQ is empty");
         }
-        
         T min = peekMin();
-        
         // removes the min
         pq.poll(); 
         return min;
@@ -113,7 +111,7 @@ public class HeapMinPQ<T> implements ExtrinsicMinPQ<T> {
      *           
      * pre : if a node of a certain item value exists in the priority queue, 
      *       otherwise throws an does not contain exception
-     * post : the node of iterest's priority is changed in the priority queue.
+     * post : the node of interest's priority is changed in the priority queue.
      * 
      * Worst Case Runtime: BigTheta(N) *iterates over whole priority queue.
     */
