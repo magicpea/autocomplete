@@ -101,7 +101,7 @@ public class UnsortedArrayMinPQ<T> implements ExtrinsicMinPQ<T> {
      * pre : given a non-empty priority queue, otherwise throws an empty exception
      * post : returns the min value
      *
-     * Worst Case Runtime:  BigTheta(N)
+     * Worst Case Runtime:  BigTheta(2 * N)
      */
     @Override
     public T removeMin() {
