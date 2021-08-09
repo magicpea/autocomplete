@@ -53,9 +53,6 @@ public class GenerativeSeamFinder implements SeamFinder {
      * @see EnergyFunction
      */
     private static class PixelGraph implements Graph<Node> {
-        
-        private final Pixel[][] pixels;
-
         /**
          * The {@link Pixel} vertices in the {@link Picture}.
          */
@@ -75,10 +72,6 @@ public class GenerativeSeamFinder implements SeamFinder {
             @Override
             // YES WE ALSO NEED TO DO THIS METHOD
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-<<<<<<< HEAD
-                
-=======
->>>>>>> 6494b7440315a3357aec392015a1acee14328001
                 List<Edge<Node>> result = new ArrayList<>(picture.height());
                 for (int j = 0; j < picture.height(); j += 1) {
                     Pixel to = pixels[0][j];
@@ -148,7 +141,7 @@ public class GenerativeSeamFinder implements SeamFinder {
         public class Pixel implements Node {
             private final int x;
             private final int y;
-           private final List<Edge<Node>> neighbors;
+            private final List<Edge<Node>> neighbors;
 
             /**
              * Constructs a pixel representing the (<i>x</i>, <i>y</i>) indices in the picture.
@@ -166,9 +159,6 @@ public class GenerativeSeamFinder implements SeamFinder {
             // YES DO THIS ADD STUFF HERE
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-<<<<<<< HEAD
-                return node.neighbors(picture, f);
-=======
                 System.out.println("Picture height is: " + picture.height());
                 System.out.println("Picture width is: " + picture.width());
                 // Starting from the rightmost column, each pixel has only a single edge to the sink (with 0 weight).
@@ -199,7 +189,6 @@ public class GenerativeSeamFinder implements SeamFinder {
 //                System.out.println("The size of neighbors is: " + neighbors.size());
 //                System.out.println("Neighbors are: " + neighbors);
                 return neighbors;
->>>>>>> 6494b7440315a3357aec392015a1acee14328001
             }
 
             @Override
