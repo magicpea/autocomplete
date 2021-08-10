@@ -1,0 +1,6 @@
+{
+    "java.project.sourcePaths": [
+        "project-scaffold/src",
+        "project-scaffold"
+    ]
+}
