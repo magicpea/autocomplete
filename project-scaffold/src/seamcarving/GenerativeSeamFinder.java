@@ -53,20 +53,10 @@ public class GenerativeSeamFinder implements SeamFinder {
      * @see EnergyFunction
      */
     private static class PixelGraph implements Graph<Node> {
-<<<<<<< HEAD
-        
-        
-
-        /**
-         * The {@link Pixel} vertices in the {@link Picture}.
-         */
-        private final Pixel[][] pixels;
-=======
 //        /**
 //         * The {@link Pixel} vertices in the {@link Picture}.
 //         */
 //        private final Pixel[][] pixels;
->>>>>>> c6e6f0849fa65a336a15282829878177e89350c9
         /**
          * The {@link Picture} for {@link #neighbors(Node)}.
          */
@@ -109,29 +99,6 @@ public class GenerativeSeamFinder implements SeamFinder {
          * @param f       the input energy function.
          */
         private PixelGraph(Picture picture, EnergyFunction f) {
-<<<<<<< HEAD
-            this.pixels = new Pixel[picture.width()][picture.height()];
-            // Starting from the rightmost column, each pixel has only a single edge to the sink (with 0 weight).
-            for (int y = 0; y < picture.height(); y += 1) {
-                Pixel from = new Pixel(picture.width() - 1, y);
-                pixels[picture.width() - 1][y] = from;
-            }
-            // Starting from the next-rightmost column...
-            for (int x = picture.width() - 2; x >= 0; x -= 1) {
-                // Consider each pixel in the column...
-                for (int y = 0; y < picture.height(); y += 1) {
-                    Pixel from = new Pixel(x, y);
-                    pixels[x][y] = from;
-                    // Connect the pixel to its right-up, right-middle, and right-down neighbors...
-                    for (int z = y - 1; z <= y + 1; z += 1) {
-                        // Only if the neighbor is in the bounds of the picture.
-                        if (0 <= z && z < picture.height()) {
-                            Pixel to = pixels[x + 1][z];
-                        }
-                    }
-                }
-            }
-=======
 //            this.pixels = new Pixel[picture.width()][picture.height()];
 //            // Starting from the rightmost column, each pixel has only a single edge to the sink (with 0 weight).
 ////            for (int y = 0; y < picture.height(); y += 1) {
@@ -162,7 +129,6 @@ public class GenerativeSeamFinder implements SeamFinder {
 //                    System.out.println("Pixel is : " + pixels[i][j]);
 //                }
 //            }
->>>>>>> c6e6f0849fa65a336a15282829878177e89350c9
             this.picture = picture;
             this.f = f;
         }
@@ -202,7 +168,12 @@ public class GenerativeSeamFinder implements SeamFinder {
             // YES DO THIS ADD STUFF HERE
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-//                System.out.println("Picture height is: " + picture.height());
+                    System.out.println(neighbors(picture, f));
+                    return new ArrayList<Edge<Node>>();
+
+
+
+                //                System.out.println("Picture height is: " + picture.height());
 //                System.out.println("Picture width is: " + picture.width());
 //                // Starting from the rightmost column, each pixel has only a single edge to the sink (with 0 weight).
 //                for (int y = 0; y < picture.height(); y += 1) {
