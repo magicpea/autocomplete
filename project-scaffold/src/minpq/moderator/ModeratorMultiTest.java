@@ -69,9 +69,13 @@ class ModeratorMultiTest {
         System.out.println(toxic.size() + " comments loaded");
 
         // Testing implementations.
+        // Map<String, ExtrinsicMinPQ<String>> implementations = Map.of(
+        //         "UnsortedArrayMinPQ", new UnsortedArrayMinPQ<>(),
+        //         "HeapMinPQ", new HeapMinPQ<>(),
+        //         "OptimizedHeapMinPQ", new OptimizedHeapMinPQ<>()
+        // );
         Map<String, ExtrinsicMinPQ<String>> implementations = Map.of(
                 "UnsortedArrayMinPQ", new UnsortedArrayMinPQ<>(),
-                "HeapMinPQ", new HeapMinPQ<>(),
                 "OptimizedHeapMinPQ", new OptimizedHeapMinPQ<>()
         );
 

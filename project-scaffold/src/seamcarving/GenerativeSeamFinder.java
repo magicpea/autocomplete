@@ -53,6 +53,9 @@ public class GenerativeSeamFinder implements SeamFinder {
      * @see EnergyFunction
      */
     private static class PixelGraph implements Graph<Node> {
+        
+        
+
         /**
          * The {@link Pixel} vertices in the {@link Picture}.
          */
@@ -112,12 +115,12 @@ public class GenerativeSeamFinder implements SeamFinder {
                     Pixel from = new Pixel(x, y);
                     pixels[x][y] = from;
                     // Connect the pixel to its right-up, right-middle, and right-down neighbors...
-//                    for (int z = y - 1; z <= y + 1; z += 1) {
-//                        // Only if the neighbor is in the bounds of the picture.
-//                        if (0 <= z && z < picture.height()) {
-//                            Pixel to = pixels[x + 1][z];
-//                        }
-//                    }
+                    for (int z = y - 1; z <= y + 1; z += 1) {
+                        // Only if the neighbor is in the bounds of the picture.
+                        if (0 <= z && z < picture.height()) {
+                            Pixel to = pixels[x + 1][z];
+                        }
+                    }
                 }
             }
             this.picture = picture;
@@ -141,7 +144,7 @@ public class GenerativeSeamFinder implements SeamFinder {
         public class Pixel implements Node {
             private final int x;
             private final int y;
-            private final List<Edge<Node>> neighbors;
+           private final List<Edge<Node>> neighbors;
 
             /**
              * Constructs a pixel representing the (<i>x</i>, <i>y</i>) indices in the picture.
