@@ -68,7 +68,7 @@ public class GenerativeSeamFinder implements SeamFinder {
             @Override
             // YES WE ALSO NEED TO DO THIS METHOD
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                Pixel[][] pixels = new Pixel[picture.width()][picture.height()];
+//                Pixel[][] pixels = new Pixel[picture.width()][picture.height()];
                 List<Edge<Node>> result = new ArrayList<>(picture.height());
                 for (int j = 0; j < picture.height(); j += 1) {
                     Pixel to = pixels[0][j];
@@ -87,6 +87,7 @@ public class GenerativeSeamFinder implements SeamFinder {
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
                 System.out.println("Here we go!");
                 return List.of(); // Sink has no neighbors
+                // yup!
             }
         };
 
@@ -105,8 +106,15 @@ public class GenerativeSeamFinder implements SeamFinder {
         // DO NOT OVERRIDE THIS METHOD
         @Override
         public List<Edge<Node>> neighbors(Node node) {
-            Pixel from = new Pixel(0, 0);
-            return from.neighbors(picture, f);
+            List<Edge<Node>> result = new ArrayList<>(picture.height());
+            for (int z = y - 1; z <= y + 1; z += 1)
+                // Only if the neighbor is in the bounds of the picture.
+                if (0 <= z && z < picture.height()) {
+                    result.add(new Edge<>(from, to, f.apply(picture, x + 1, z)));
+                }
+            }
+            return result;
+            // return node.neighbors(picture, f);
         }
 
         /**
@@ -134,33 +142,71 @@ public class GenerativeSeamFinder implements SeamFinder {
 
 
             // YES DO THIS ADD STUFF HERE
+            // So this is the scanning neighbors for middle pixels (inspired from pixel graph)
+            // Does this method decompose into our sink and source, neighbor methods?
+
+            // sink - no neighbors (right most pixels)
+
+            // source- deals with pixel edges as list
+
+            // general neighbors -
+
+            // three neighbors methods all in pixelgraph?
+
+            // or only scans middle?
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                Pixel[][] pixels = new Pixel[picture.width()][picture.height()];
+                // Pixel[][] pixels = new Pixel[picture.width()][picture.height()];
                 List<Edge<Node>> result = new ArrayList<>(picture.height());
                 // Starting from the rightmost column, each pixel has only a single edge to the sink (with 0 weight).
-                for (int y = 0; y < picture.height(); y += 1) {
-                    Pixel from = new Pixel(picture.width() - 1, y);
-                    pixels[picture.width() - 1][y] = from;
-                    result.add(new Edge<>(from, sink, 0));
-                }
-                // Starting from the next-rightmost column...
-                for (int x = picture.width() - 2; x >= 0; x -= 1) {
-                    // Consider each pixel in the column...
-                    for (int y = 0; y < picture.height(); y += 1) {
-                        Pixel from = new Pixel(x, y);
-                        pixels[x][y] = from;
-                        // Connect the pixel to its right-up, right-middle, and right-down neighbors...
-                        for (int z = y - 1; z <= y + 1; z += 1) {
-                            // Only if the neighbor is in the bounds of the picture.
-                            if (0 <= z && z < picture.height()) {
-                                Pixel to = pixels[x + 1][z];
-                                result.add(new Edge<>(from, to, f.apply(picture, x + 1, z)));
-                            }
-                        }
+//                for (int y = 0; y < picture.height(); y += 1) {
+//                    Pixel from = new Pixel(picture.width() - 1, y);
+//                    // pixels[picture.width() - 1][y] = from;
+//                    result.add(new Edge<>(from, sink, 0));
+//                }
+//                // Starting from the next-rightmost column...
+//                for (int x = picture.width() - 2; x >= 0; x -= 1) {
+//                    // Consider each pixel in the column...
+//                    for (int y = 0; y < picture.height(); y += 1) {
+//                        Pixel from = new Pixel(x, y);
+//                        // pixels[x][y] = from;
+//                        // Connect the pixel to its right-up, right-middle, and right-down neighbors...
+//                        for (int z = y - 1; z <= y + 1; z += 1) {
+//                            // Only if the neighbor is in the bounds of the picture.
+//                            if (0 <= z && z < picture.height()) {
+//                                Pixel to = pixels[x + 1][z];
+//                                result.add(new Edge<>(from, to, f.apply(picture, x + 1, z)));
+//                            }
+//                        }
+//                    }
+//                }
+//                return result;
+
+
+                // seam finder gives the list of pixels you want to find neighbors for
+
+                // we need to call neighbors / implement
+
+                // to add the neighbors of each pixel in that original seamfinder
+
+                // iterate over seamfinder call
+
+                // if statement from pixel
+
+                // add them
+
+                for (int z = y - 1; z <= y + 1; z += 1) {
+                    // Only if the neighbor is in the bounds of the picture.
+                    if (0 <= z && z < picture.height()) {
+                        AdjacencyListSeamFinder.PixelGraph.Pixel to = pixels[x + 1][z];
+                        from.neighbors.add(new Edge<>(from, to, f.apply(picture, x + 1, z)));
+                        System.out.println("Neighbors : " + from.neighbors);
                     }
                 }
-                return result;
+
+
+
+
             }
 
             @Override
