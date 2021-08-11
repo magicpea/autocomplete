@@ -18,8 +18,7 @@ public class SeamCarver {
     /**
      * Path to the input image.
      */
-    // private static final String INPUT_PATH = "data/seamcarving/HJoceanSmall.png";
-    private static final String INPUT_PATH = "Users/drena/OneDrive/Desktop/Q8 CSE 373/Autocomplete/autocomplete/project-scaffold/data/seamcarving/HJoceanSmall.png";
+    private static final String INPUT_PATH = "data/seamcarving/HJoceanSmall.png";
     /**
      * Path to the output image.
      */
