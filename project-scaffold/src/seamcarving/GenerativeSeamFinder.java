@@ -67,11 +67,11 @@ public class GenerativeSeamFinder implements SeamFinder {
         private final Node source = new Node() {
             @Override
             // YES WE ALSO NEED TO DO THIS METHOD
-            // Giga chad whole grain grind set quinoa warrior
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
+//                Pixel[][] pixels = new Pixel[picture.width()][picture.height()];
                 List<Edge<Node>> result = new ArrayList<>(picture.height());
                 for (int j = 0; j < picture.height(); j += 1) {
-                    Pixel to = new Pixel(0, j);
+                    Pixel to = pixels[0][j];
                     result.add(new Edge<>(source, to, f.apply(picture, 0, j)));
                 }
                 System.out.println("Result is this big : " + result.size());
@@ -106,16 +106,13 @@ public class GenerativeSeamFinder implements SeamFinder {
         // DO NOT OVERRIDE THIS METHOD
         @Override
         public List<Edge<Node>> neighbors(Node node) {
-            List<Edge<Node>> result = new ArrayList<>();
-            // essentially  this one is looking up, looking forward, looking down from a given node which contains this info
-            System.out.println(node);
-
-//            for (int z = y - 1; z <= y + 1; z += 1)
-//                // Only if the neighbor is in the bounds of the picture.
-//                if (0 <= z && z < picture.height()) {
-//                    result.add(new Edge<>(from, to, f.apply(picture, x + 1, z)));
-//                }
-//            }
+            List<Edge<Node>> result = new ArrayList<>(picture.height());
+            for (int z = y - 1; z <= y + 1; z += 1)
+                // Only if the neighbor is in the bounds of the picture.
+                if (0 <= z && z < picture.height()) {
+                    result.add(new Edge<>(from, to, f.apply(picture, x + 1, z)));
+                }
+            }
             return result;
             // return node.neighbors(picture, f);
         }
@@ -198,17 +195,17 @@ public class GenerativeSeamFinder implements SeamFinder {
 
                 // add them
 
-//                for (int z = y - 1; z <= y + 1; z += 1) {
-//                    // Only if the neighbor is in the bounds of the picture.
-//                    if (0 <= z && z < picture.height()) {
-//                        AdjacencyListSeamFinder.PixelGraph.Pixel to = pixels[x + 1][z];
-//                        from.neighbors.add(new Edge<>(from, to, f.apply(picture, x + 1, z)));
-//                        System.out.println("Neighbors : " + from.neighbors);
-//                    }
-//                }
+                for (int z = y - 1; z <= y + 1; z += 1) {
+                    // Only if the neighbor is in the bounds of the picture.
+                    if (0 <= z && z < picture.height()) {
+                        AdjacencyListSeamFinder.PixelGraph.Pixel to = pixels[x + 1][z];
+                        from.neighbors.add(new Edge<>(from, to, f.apply(picture, x + 1, z)));
+                        System.out.println("Neighbors : " + from.neighbors);
+                    }
+                }
 
 
-                return result;
+
 
             }
 

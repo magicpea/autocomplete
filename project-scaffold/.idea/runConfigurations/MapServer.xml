@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="SeamCarver" type="Application" factoryName="Application" nameIsGenerated="true">
+  <configuration default="false" name="MapServer" type="Application" factoryName="Application" nameIsGenerated="true">
     <envs>
       <env name="USERNAME" value="mapbox" />
       <env name="STYLE_ID" value="cj7t3i5yj0unt2rmt3y4b5e32" />
       <env name="TOKEN" value="" />
     </envs>
-    <option name="MAIN_CLASS_NAME" value="seamcarving.SeamCarver" />
+    <option name="MAIN_CLASS_NAME" value="huskymaps.MapServer" />
     <module name="project" />
     <extension name="coverage">
       <pattern>
