@@ -73,9 +73,8 @@ public class GenerativeSeamFinder implements SeamFinder {
                 List<Edge<Node>> result = new ArrayList<>(picture.height());
                 for (int j = 0; j < picture.height(); j += 1) {
                     Pixel to = new Pixel(0, j);
-                    result.add(new Edge<>(source, to, f.apply(picture, 0, j)));
+                    result.add(new Edge<Node>(this, to, f.apply(picture, 0, j)));
                 }
-                System.out.println("Result is this big : " + result.size());
                 return result;
             }
         };
@@ -90,7 +89,7 @@ public class GenerativeSeamFinder implements SeamFinder {
         private final Node sink = new Node() {
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                System.out.println("Here we go!");
+//                System.out.println("Here we go!");
                 return List.of(); // Sink has no neighbors
                 // yup!
             }
@@ -168,45 +167,26 @@ public class GenerativeSeamFinder implements SeamFinder {
                 // is the index of (x, y) the only way we can access a node's info ?
             // 2. At what point in the building of our neighborhood do we reach the fence ?
                 // (when do we break our index ?)
+
+            // Pixel Neighbors
             @Override
             public List<Edge<Node>> neighbors(Picture picture, EnergyFunction f) {
-                List<Edge<Node>> result = new ArrayList<>(picture.height());
-                // essentially  this one is looking up, looking forward, looking down from a given node which contains this info
-//            for (int j = 0; j < picture.height(); j += 1) {
-//                Pixel to = new Pixel(0, j);
-//                result.add(new Edge<>(source, to, f.apply(picture, 0, j)));
-//            }
-                // seam finder gives the list of pixels you want to find neighbors for
-                // we need to call neighbors / implement
-                // to add the neighbors of each pixel in that original seamfinder
-                // iterate over seamfinder call
-                // if statement from pixel
-                // add them
-                // Starting from the rightmost column, each pixel has only a single edge to the sink (with 0 weight).
-                // Adding this edge case
-                System.out.println("(" + x + " , " + y + ")");
-                for (int y = 0; y < picture.height(); y += 1) {
-                    Pixel from = new Pixel(picture.width() - 1, y);
-                    result.add(new Edge<>(from, sink, 0));
-                }
-//                System.out.println("Y is now: " + y);
-                for (int x = picture.width() - 2; x >= 0; x -= 1) {
-                    for (int y = 0; y < (picture.height() - 1); y += 1) {
-                        for (int z = y - 1; z <= y + 1; z += 1) {
-                            // Only if the neighbor is in the bounds of the picture.
-                            if (0 <= z && z < picture.height()) {
-                                Pixel to = new Pixel(x + 1, z);
-                                Pixel from = new Pixel(x, y);
-//                        result.add(new Edge<>(from, to, f.apply(picture, x + 1, z)));
-                                result.add(new Edge<>(from, to, f.apply(picture, x + 1, z)));
-//                            System.out.println("Neighbors : " + result);
-                            }
-                        }
-                    }
-                }
-                System.out.println("Waiting for the results " + result.size());
-                return result;
+                List<Edge<Node>> result = new ArrayList<>(3);
 
+                    // if we are out of bounds horizontally
+                if (x == picture.width() -1) {
+                    return List.of( new Edge<>(this, sink, 0));
+                }
+                for (int z = y - 1; z <= y + 1; z += 1) {
+                    // Only if the neighbor is in the bounds of the picture.
+                    if (0 <= z && z < picture.height()) {
+                        Pixel to = new Pixel(x + 1, z);
+                        result.add(new Edge<>(this, to, f.apply(picture, x + 1, z)));
+//                                System.out.println("Neighbors : " + result);
+                     }
+
+                }
+                return result;
             }
 
             @Override
