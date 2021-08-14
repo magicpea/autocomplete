@@ -45,6 +45,9 @@ public class DijkstraSolver<V> implements ShortestPathSolver<V> {
                 }
             }
         }
+        // comments marked for deletion later on
+        System.out.println("edge to: " + this.edgeTo.toString());
+        System.out.println("dist to: " + this.distTo.toString());
     }
 
     @Override

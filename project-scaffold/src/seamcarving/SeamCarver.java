@@ -1,6 +1,7 @@
 package seamcarving;
 
 import graphs.DijkstraSolver;
+import graphs.ToposortDAGSolver;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class SeamCarver {
     // HERE IS MAINE THE STATE
     public static void main(String[] args) throws IOException {
         EnergyFunction f = new DualGradientEnergyFunction();
-        SeamFinder seamFinder = new GenerativeSeamFinder(DijkstraSolver::new);
+        SeamFinder seamFinder = new GenerativeSeamFinder(ToposortDAGSolver::new);
         SeamCarver seamCarver = new SeamCarver(new File(INPUT_PATH), f, seamFinder);
         System.out.println(seamCarver.removeVertical());
         seamCarver.picture().save(new File(OUTPUT_PATH));
