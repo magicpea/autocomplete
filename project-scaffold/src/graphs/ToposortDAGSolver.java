@@ -25,7 +25,7 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
         this.edgeTo = new HashMap<>();
         this.distTo = new HashMap<>();
 
-//        System.out.println("Scalloped Potatoes");
+        System.out.println("Scalloped Potatoes");
         List <V> result = new ArrayList<>();
         Set<V> visited = new HashSet<>();
 
