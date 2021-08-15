@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a039a8f8-0f00-4a92-847d-32db31778a15" name="Default Changelist" comment="" />
+    <list default="true" id="a039a8f8-0f00-4a92-847d-32db31778a15" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project-scaffold/out/production/project/graphs/ToposortDAGSolver.class" beforeDir="false" afterPath="$PROJECT_DIR$/../project-scaffold/out/production/project/graphs/ToposortDAGSolver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../project-scaffold/src/graphs/ToposortDAGSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project-scaffold/src/graphs/ToposortDAGSolver.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

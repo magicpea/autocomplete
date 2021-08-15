@@ -24,13 +24,12 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
     public ToposortDAGSolver(Graph<V> graph, V start) {
         this.edgeTo = new HashMap<>();
         this.distTo = new HashMap<>();
-
         System.out.println("Scalloped Potatoes");
         List <V> result = new ArrayList<>();
         Set<V> visited = new HashSet<>();
 
         dfsPostOrder(graph, start, visited, result);
-        // initializing our starting nodes
+//         initializing our starting nodes
         this.edgeTo.put(start, null);
         this.distTo.put(start, 0.0);
         V from = start;
@@ -94,13 +93,10 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
         perimeter.add(start);
         while (!perimeter.isEmpty()) {
             V from = perimeter.remove(0);
-//            System.out.println(from.toString());
             if (!visited.contains(from)) {
                 for (Edge<V> bro : graph.neighbors(from)) {
                     V to = bro.to;
                     perimeter.add(to);
-                    // we added this try it out
-//                    result.add(to);
 //                    visited.add(from);
 //                    result.add(from);
                 }
@@ -108,13 +104,8 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
                 result.add(from);
             }
         }
-//        System.out.println("Visited nodes: " + visited);
-//        System.out.println("Result nodes: " + result);
-//        System.out.println("Before: " + result);
         Collections.reverse(result);
-//        System.out.println("After: " + result);
         // Debug code for deletion later
-//        System.out.println("Visited: " + visited.toString());
         // 2. Return verticies in reverse DFS post-order
         // essentially take DFS and reverse at the end
         // Questions:
