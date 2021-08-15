@@ -1,8 +1,4 @@
 package graphs;
-
-import minpq.DoubleMapMinPQ;
-import minpq.ExtrinsicMinPQ;
-
 import java.util.*;
 
 /**
@@ -24,25 +20,20 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
     public ToposortDAGSolver(Graph<V> graph, V start) {
         this.edgeTo = new HashMap<>();
         this.distTo = new HashMap<>();
-
 //        System.out.println("Scalloped Potatoes");
         List <V> result = new ArrayList<>();
         Set<V> visited = new HashSet<>();
-
         dfsPostOrder(graph, start, visited, result);
         // initializing our starting nodes
         this.edgeTo.put(start, null);
         this.distTo.put(start, 0.0);
         V from = start;
-
-        // Sonia Q:
+        // TA Q:
         // Potential for loop we thought about using
         // not sure how to iterate our for loop what is the mood?
-
 //        for(V vertex : result) {
             // for every node, we want to update its connections with that postorder
             // maybe this operates on a single node ?
-
 
         // we did this to experiment
         int maxIndex = graph.neighbors(from).size();
@@ -55,27 +46,17 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
                 System.out.println("P2");
                 if(i == graph.neighbors(from).size() - 1) {
                     // we need to initialize distTo and edgeTo here
-                    System.out.println("P3");
                     edgeTo.put(to, null);
-                    System.out.println("P4");
                     distTo.put(to, oldDist);
-                    System.out.println("P5");
                 } else {
-                    System.out.println("P6");
                     double newDist = distTo.get(from) + edge.weight;
-                    System.out.println("P7");
                     // updating the shortest path
                     if(newDist < oldDist) {
-                        System.out.println("P8");
                         edgeTo.put(to, edge);
-                        System.out.println("P9");
                         distTo.put(to, newDist);
-                        System.out.println("P10");
                     }
                 }
-                System.out.println("does this break?");
         }
-        System.out.println("does THIS break?");
     }
 
     /**
@@ -108,7 +89,7 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
                     V to = bro.to;
                     perimeter.add(to);
                     // we added this try it out
-                    // Sonia Q:
+                    // TA Q:
                     // how do we update these structures so they make sense
 //                    result.add(to);
 //                    visited.add(from);
@@ -119,7 +100,7 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
             }
         }
 
-        // Sonia Q:
+        // TA Q:
         // building DFSpost order Questions:
         // What's the deal ok?
         // Index out of bounds? IndexFrom(1) > IndexTo(0)
@@ -133,7 +114,9 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
         // When do we call this key command:
         // Is it after we've ran and built or DFSpostOrder list?
         // when does that happen in the method?
-        Collections.reverse(result);
+//        Collections.reverse(result);
+
+    }
 
     @Override
     public List<V> solution(V goal) {
