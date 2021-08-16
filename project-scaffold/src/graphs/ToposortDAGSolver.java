@@ -25,6 +25,18 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
         List <V> result = new ArrayList<>();
         Set<V> visited = new HashSet<>();
         dfsPostOrder(graph, start, visited, result);
+        Collections.reverse(result);
+
+        // from your list of vertexs
+
+        // iterate through vertecies
+
+            // inner for loop to build distances
+            // get distance weights of all edges (nested forloop)
+            // old distance and new distance
+
+
+        System.out.println("We did it!");
 //         initializing our starting nodes
         this.edgeTo.put(start, null);
         this.distTo.put(start, 0.0);
@@ -68,7 +80,7 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
      * @param visited the set of visited vertices.
      * @param result  the destination for adding nodes.
      */
-    private void dfsPostOrder(Graph<V> graph, V start, Set<V> visited, List<V> result) {
+    private void dfsPostOrderNope(Graph<V> graph, V start, Set<V> visited, List<V> result) {
         // comment marked for deletion later
 //        System.out.println("we in this joint");
 
@@ -119,6 +131,30 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
         // Is it after we've ran and built or DFSpostOrder list?
         // when does that happen in the method?
 //        Collections.reverse(result);
+
+    }
+
+    private void dfsPostOrder(Graph<V> graph, V start, Set<V> visited, List<V> result) {
+        // check to make sure it isn't visited twice
+        if(visited.contains(start)) {
+            // list of neighbors from start node that you want to traverse from
+
+            return;
+        }
+
+        List<Edge<V>> temp = graph.neighbors(start);
+
+        // mark visited
+        visited.add(start);
+        // call all the neighbors
+        if (!temp.isEmpty()){
+            for(Edge<V> e : temp) {
+                V to = e.to;
+                dfsPostOrder(graph, to, visited, result);
+            }
+            // record the post-order
+            result.add(start);
+        }
 
     }
 
