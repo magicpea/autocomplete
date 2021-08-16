@@ -25,35 +25,45 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
         // as the pixel with the lowest energy value in column 0.
         // we want to build our first column of energy values
         // also finding the minimum energy from that column and adding it to our result
+
+        // dummy thick mf coordinates I'm going crazy
         Map mf_coordinates = new HashMap<Integer, Integer>();
 
         // left most pixels: (initial edge case)
-        double min_energy = 9;
+
         // we treated the first starting point from column 0
         // as the pixel with the lowest energy value in column 0.
         // we want to build our first column of energy values
         // also finding the minimum energy from that column and adding it to our result
-        double current_energy = 10;
-        for (int y = 0; y < picture.height(); y++) {
-            // now we need to apply the energy function
-            pixels[0][y] = f.apply(picture, 0, y);
-            current_energy = f.apply(picture, 0, y);
-            if (current_energy < min_energy) {
-                min_energy = current_energy;
-                mf_coordinates.put(0, y);
+
+
+
+        int x_i = picture.width() - 1;
+
+        for (int x = x_i; x >= 0; x++) {
+
+            // x is zero test case
+            if (x == 0){
+                for (int y = 0; y < picture.height(); y++) {
+                    // left most pixels equal energy value
+                    pixels[x][y] = f.apply(picture, x, y);
+                }
+            }
+
+            // width to 1
+            for (int y = 0; y < picture.height(); y++) {
+                // now we need to apply the energy function
+                // R -> L
+                // start from right then add outer for loop till we reach left
+
+                // call neighbors
+
 
             }
         }
-        for(int x = 1; x < picture.width(); x++) {
-            for(int y = 0; y < picture.height(); y++) {
-                pixels[x][y] = f.apply(picture, x, y);
-                // iterate over neighbors and figure out the min
-            }
-        }
-        // now we need to start finding neighbors from our best first source node
-//        if (x == picture.width() -1) {
-//            return List.of( new Edge<>(this, sink, 0));
-//        }
+
+
+
         // essentially a for loop till we reach the edge of the picture
 
         // checking neighbors of our pixel
@@ -74,21 +84,21 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
         // figure out how to do this
 
         // the best seam we want to return back
-        ///
-        List<Integer> result = new ArrayList<>();
-        return result;
+
+        return mf_coordinates;
     }
 
     // private helper method, basically just returns the neighbors of a given pixel
     // now, we need to figure out how to return the best neighbor !
     // returns the energy value of min neighbor
 
-    private double neighbors(Picture picture, EnergyFunction f, int x, int y) {
+    private int neighbors(Picture picture, EnergyFunction f, int x, int y) {
         Map<Integer, Integer> neighborList = new HashMap<>(3);
-        double min = -1;
+        double min = - 1;
+        int best_y = - 1;
         // if we are out of bounds horizontally
         if (x == picture.width() - 1) {
-            return  min;
+            return best_y;
         }
         for (int z = y - 1; z <= y + 1; z += 1) {
             // Only if the neighbor is in the bounds of the picture.
@@ -97,12 +107,18 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
                 neighborList.put(x + 1, z);
             }
         }
+        double parent_e_val = f.apply(picture, x, y);
         for(Integer key : neighborList.keySet()) {
-            double curr = f.apply(picture, key, neighborList.get(key));
-            if(curr < min || min == -1) {
-                min = curr;
+            // current energy value
+            double neighbor_path_e_value = f.apply(picture, key, neighborList.get(key));
+            double e_sum = neighbor_path_e_value + parent_e_val;
+
+            if(e_sum < min || min == -1) {
+                min = e_sum;
+                best_y = neighborList.get(key);
             }
         }
-        return min;
+
+        return best_y;
     }
 }
