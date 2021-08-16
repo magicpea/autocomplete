@@ -2,6 +2,7 @@ package seamcarving;
 
 import graphs.Edge;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,10 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
         // also finding the minimum energy from that column and adding it to our result
 
         // dummy thick mf coordinates I'm going crazy
-        Map mf_coordinates = new HashMap<Integer, Integer>();
+//        Map mf_coordinates = new HashMap<Integer, Integer>();
+        ArrayList seam = new ArrayList<Integer>();
+
+        ArrayList lobotomy = new ArrayList<ArrayList<Double>>();
 
         // left most pixels: (initial edge case)
 
@@ -39,9 +43,7 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
 
 
         int x_i = picture.width() - 1;
-
         for (int x = x_i; x >= 0; x++) {
-
             // x is zero test case
             if (x == 0){
                 for (int y = 0; y < picture.height(); y++) {
@@ -49,21 +51,32 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
                     pixels[x][y] = f.apply(picture, x, y);
                 }
             }
-
             // width to 1
             for (int y = 0; y < picture.height(); y++) {
+                ArrayList appendix = neighbors(picture, f, x, y);
+                lobotomy.add(appendix);
                 // now we need to apply the energy function
                 // R -> L
                 // start from right then add outer for loop till we reach left
-
                 // call neighbors
-
-
             }
+            seam.add(updateEnergy(x, pixels, lobotomy));
         }
-
-
-
+//        // iterate through the lobotomy (remember that size doesn't matter ;P )
+//        // min value
+//        double minVal = -1.0;
+//        // y-value
+//        int newY;
+//        // looking for min energy function in the list
+//        for(int i = 0; i < lobotomy.size(); i++) {
+//            ArrayList temp = (ArrayList<Double>) lobotomy.get(i);
+//            if((double)temp.get(0) < minVal) {
+//                minVal = (double)temp.get(0);
+//                newY = (int)temp.get(1);
+//                // gotta figure out where to get the x from
+//                pixels[x][newY] = minVal;
+//            }
+//        }
         // essentially a for loop till we reach the edge of the picture
 
         // checking neighbors of our pixel
@@ -85,20 +98,23 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
 
         // the best seam we want to return back
 
-        return mf_coordinates;
+//        return mf_coordinates;
+        return seam;
     }
 
     // private helper method, basically just returns the neighbors of a given pixel
     // now, we need to figure out how to return the best neighbor !
     // returns the energy value of min neighbor
 
-    private int neighbors(Picture picture, EnergyFunction f, int x, int y) {
+    private ArrayList neighbors(Picture picture, EnergyFunction f, int x, int y) {
         Map<Integer, Integer> neighborList = new HashMap<>(3);
+        ArrayList concussion = new ArrayList<Double>(2);
         double min = - 1;
         int best_y = - 1;
+
         // if we are out of bounds horizontally
         if (x == picture.width() - 1) {
-            return best_y;
+            return concussion;
         }
         for (int z = y - 1; z <= y + 1; z += 1) {
             // Only if the neighbor is in the bounds of the picture.
@@ -116,9 +132,29 @@ public class DynamicProgrammingSeamFinder implements SeamFinder {
             if(e_sum < min || min == -1) {
                 min = e_sum;
                 best_y = neighborList.get(key);
+                concussion.add(min);
+                concussion.add((double)best_y);
             }
         }
+        return concussion;
+    }
 
-        return best_y;
+    private int updateEnergy(int x, double pixels[][], ArrayList<ArrayList<Double>> lobotomy) {
+        // iterate through the lobotomy (remember that size doesn't matter ;P )
+        // min value
+        double minVal = -1.0;
+        // y-value
+        int newY = -1;
+        // looking for min energy function in the list
+        for(int i = 0; i < lobotomy.size(); i++) {
+            ArrayList temp = lobotomy.get(i);
+            if((double)temp.get(0) < minVal) {
+                minVal = (double)temp.get(0);
+                newY = (int)temp.get(1);
+                // gotta figure out where to get the x from
+                pixels[x][newY] = minVal;
+            }
+        }
+        return newY;
     }
 }
