@@ -26,6 +26,33 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
         Set<V> visited = new HashSet<>();
         dfsPostOrder(graph, start, visited, result);
         Collections.reverse(result);
+        // initializing where we are starting from
+        V from = start;
+        // iterating through each vertex of result
+        for(V vertex : result) {
+            for (int i = 0; i <= graph.neighbors(from).size() - 1; i++) {
+                // get the edge
+                Edge<V> edge = graph.neighbors(from).get(i);
+                // figure out where the edge points
+                V to = edge.to;
+                // the old distance
+                double oldDist = distTo.getOrDefault(to, Double.POSITIVE_INFINITY);
+                if((i == graph.neighbors(from).size() - 1) || distTo.get(from) == null) {
+                    edgeTo.put(to, null);
+                    distTo.put(to, oldDist);
+                } else {
+                    // updated distance
+                    System.out.println(distTo.get(from) + " " + edge.weight);
+                    double newDist = distTo.get(from) + edge.weight;
+                    // if the new distance is a better option, update
+                    if(newDist < oldDist) {
+                        edgeTo.put(to, edge);
+                        distTo.put(to, newDist);
+                    }
+                }
+            }
+        }
+        System.out.println("figured it out");
 
         // from your list of vertexs
 
@@ -35,12 +62,12 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
             // get distance weights of all edges (nested forloop)
             // old distance and new distance
 
-
-        System.out.println("We did it!");
-//         initializing our starting nodes
-        this.edgeTo.put(start, null);
-        this.distTo.put(start, 0.0);
-        V from = start;
+//
+//        System.out.println("We did it!");
+////         initializing our starting nodes
+//        this.edgeTo.put(start, null);
+//        this.distTo.put(start, 0.0);
+//        V from = start;
         // TA Q:
         // Potential for loop we thought about using
         // not sure how to iterate our for loop what is the mood?
@@ -49,27 +76,27 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
             // maybe this operates on a single node ?
 
         // we did this to experiment
-        int maxIndex = graph.neighbors(from).size();
-//        for (Edge<V> edge : graph.neighbors(from)) {
-        for (int i = 0; i <= graph.neighbors(from).size() - 1; i++) {
-            Edge<V> edge = graph.neighbors(from).get(i);
-                V to = edge.to;
-                System.out.println("P1");
-                double oldDist = distTo.getOrDefault(to, Double.POSITIVE_INFINITY);
-                System.out.println("P2");
-                if(i == graph.neighbors(from).size() - 1) {
-                    // we need to initialize distTo and edgeTo here
-                    edgeTo.put(to, null);
-                    distTo.put(to, oldDist);
-                } else {
-                    double newDist = distTo.get(from) + edge.weight;
-                    // updating the shortest path
-                    if(newDist < oldDist) {
-                        edgeTo.put(to, edge);
-                        distTo.put(to, newDist);
-                    }
-                }
-        }
+//        int maxIndex = graph.neighbors(from).size();
+////        for (Edge<V> edge : graph.neighbors(from)) {
+//        for (int i = 0; i <= graph.neighbors(from).size() - 1; i++) {
+//            Edge<V> edge = graph.neighbors(from).get(i);
+//                V to = edge.to;
+//                System.out.println("P1");
+//                double oldDist = distTo.getOrDefault(to, Double.POSITIVE_INFINITY);
+//                System.out.println("P2");
+//                if(i == graph.neighbors(from).size() - 1) {
+//                    // we need to initialize distTo and edgeTo here
+//                    edgeTo.put(to, null);
+//                    distTo.put(to, oldDist);
+//                } else {
+//                    double newDist = distTo.get(from) + edge.weight;
+//                    // updating the shortest path
+//                    if(newDist < oldDist) {
+//                        edgeTo.put(to, edge);
+//                        distTo.put(to, newDist);
+//                    }
+//                }
+//        }
     }
 
     /**
