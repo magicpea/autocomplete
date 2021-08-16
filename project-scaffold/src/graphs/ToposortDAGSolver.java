@@ -10,6 +10,7 @@ import java.util.*;
 public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
     private final Map<V, Edge<V>> edgeTo;
     private final Map<V, Double> distTo;
+    private final V start;
 
     /**
      * Constructs a new instance by executing the toposort-DAG-shortest-paths algorithm on the graph from the start.
@@ -20,83 +21,30 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
     public ToposortDAGSolver(Graph<V> graph, V start) {
         this.edgeTo = new HashMap<>();
         this.distTo = new HashMap<>();
-
-        System.out.println("Scalloped Potatoes");
+        this.start = start;
         List <V> result = new ArrayList<>();
         Set<V> visited = new HashSet<>();
         dfsPostOrder(graph, start, visited, result);
         Collections.reverse(result);
-        // initializing where we are starting from
-        V from = start;
-        // iterating through each vertex of result
+        edgeTo.put(start, null);
+        distTo.put(start, 0.0);
+
         for(V vertex : result) {
-            for (int i = 0; i <= graph.neighbors(from).size() - 1; i++) {
-                // get the edge
-                Edge<V> edge = graph.neighbors(from).get(i);
+            // each neighbor of a given vertex
+            for (int i = 0; i <= graph.neighbors(vertex).size() - 1; i++) {
+                Edge<V> edge = graph.neighbors(vertex).get(i);
                 // figure out where the edge points
                 V to = edge.to;
                 // the old distance
                 double oldDist = distTo.getOrDefault(to, Double.POSITIVE_INFINITY);
-                if((i == graph.neighbors(from).size() - 1) || distTo.get(from) == null) {
-                    edgeTo.put(to, null);
-                    distTo.put(to, oldDist);
-                } else {
-                    // updated distance
-                    System.out.println(distTo.get(from) + " " + edge.weight);
-                    double newDist = distTo.get(from) + edge.weight;
-                    // if the new distance is a better option, update
-                    if(newDist < oldDist) {
-                        edgeTo.put(to, edge);
-                        distTo.put(to, newDist);
-                    }
+                double newDist = distTo.get(vertex) + edge.weight;
+                if(newDist < oldDist) {
+                    edgeTo.put(to, edge);
+                    distTo.put(to, newDist);
                 }
+
             }
         }
-        System.out.println("figured it out");
-
-        // from your list of vertexs
-
-        // iterate through vertecies
-
-            // inner for loop to build distances
-            // get distance weights of all edges (nested forloop)
-            // old distance and new distance
-
-//
-//        System.out.println("We did it!");
-////         initializing our starting nodes
-//        this.edgeTo.put(start, null);
-//        this.distTo.put(start, 0.0);
-//        V from = start;
-        // TA Q:
-        // Potential for loop we thought about using
-        // not sure how to iterate our for loop what is the mood?
-//        for(V vertex : result) {
-            // for every node, we want to update its connections with that postorder
-            // maybe this operates on a single node ?
-
-        // we did this to experiment
-//        int maxIndex = graph.neighbors(from).size();
-////        for (Edge<V> edge : graph.neighbors(from)) {
-//        for (int i = 0; i <= graph.neighbors(from).size() - 1; i++) {
-//            Edge<V> edge = graph.neighbors(from).get(i);
-//                V to = edge.to;
-//                System.out.println("P1");
-//                double oldDist = distTo.getOrDefault(to, Double.POSITIVE_INFINITY);
-//                System.out.println("P2");
-//                if(i == graph.neighbors(from).size() - 1) {
-//                    // we need to initialize distTo and edgeTo here
-//                    edgeTo.put(to, null);
-//                    distTo.put(to, oldDist);
-//                } else {
-//                    double newDist = distTo.get(from) + edge.weight;
-//                    // updating the shortest path
-//                    if(newDist < oldDist) {
-//                        edgeTo.put(to, edge);
-//                        distTo.put(to, newDist);
-//                    }
-//                }
-//        }
     }
 
     /**
@@ -107,82 +55,20 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
      * @param visited the set of visited vertices.
      * @param result  the destination for adding nodes.
      */
-    private void dfsPostOrderNope(Graph<V> graph, V start, Set<V> visited, List<V> result) {
-        // comment marked for deletion later
-//        System.out.println("we in this joint");
-
-        // we know we need to call collections.reverse at some point
-
-        // 1. Run DFS (build a collection of verticies)
-        // stores the remaining vertices to visit in the DFS
-        Stack<V> perimeter = new Stack<V>();
-
-        // stores the set of discovered vertices so we don't revisit them multiple times
-//        Set<V> discovered = new Set<>();
-        // kicking off our starting point by adding it to the perimeter
-        perimeter.add(start);
-        while (!perimeter.isEmpty()) {
-            V from = perimeter.remove(0);
-            if (!visited.contains(from)) {
-                for (Edge<V> bro : graph.neighbors(from)) {
-                    V to = bro.to;
-                    perimeter.add(to);
-//                    visited.add(from);
-//                    result.add(from);
-                }
-                visited.add(from);
-                result.add(from);
-            }
-        }
-        Collections.reverse(result);
-        // Debug code for deletion later
-        // 2. Return verticies in reverse DFS post-order
-        // essentially take DFS and reverse at the end
-        // Questions:
-        // How do we implement toposort objective 2 and 3
-        // Is it just by building our DFS list of results?
-        // then calling Collections.reverse
-
-        // TA Q:
-        // building DFSpost order Questions:
-        // What's the deal ok?
-        // Index out of bounds? IndexFrom(1) > IndexTo(0)
-        // what the heck is going on?
-        // for real tho we are trying to visualize this and it seems
-        // once we reach the end of our graph we can't access edge and vertice information
-        // for the last column of pixels?
-
-        // whats a good strategy
-
-        // When do we call this key command:
-        // Is it after we've ran and built or DFSpostOrder list?
-        // when does that happen in the method?
-//        Collections.reverse(result);
-
-    }
-
     private void dfsPostOrder(Graph<V> graph, V start, Set<V> visited, List<V> result) {
         // check to make sure it isn't visited twice
         if(visited.contains(start)) {
-            // list of neighbors from start node that you want to traverse from
-
             return;
         }
-
         List<Edge<V>> temp = graph.neighbors(start);
-
-        // mark visited
         visited.add(start);
-        // call all the neighbors
         if (!temp.isEmpty()){
             for(Edge<V> e : temp) {
                 V to = e.to;
                 dfsPostOrder(graph, to, visited, result);
             }
-            // record the post-order
             result.add(start);
         }
-
     }
 
     @Override
