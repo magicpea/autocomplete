@@ -25,6 +25,8 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
         List <V> result = new ArrayList<>();
         Set<V> visited = new HashSet<>();
         dfsPostOrder(graph, start, visited, result);
+        Collections.reverse(result);
+        System.out.println("We did it!");
 //         initializing our starting nodes
         this.edgeTo.put(start, null);
         this.distTo.put(start, 0.0);
@@ -68,7 +70,7 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
      * @param visited the set of visited vertices.
      * @param result  the destination for adding nodes.
      */
-    private void dfsPostOrder(Graph<V> graph, V start, Set<V> visited, List<V> result) {
+    private void dfsPostOrderNope(Graph<V> graph, V start, Set<V> visited, List<V> result) {
         // comment marked for deletion later
 //        System.out.println("we in this joint");
 
@@ -120,6 +122,22 @@ public class ToposortDAGSolver<V> implements ShortestPathSolver<V> {
         // when does that happen in the method?
 //        Collections.reverse(result);
 
+    }
+
+    private void dfsPostOrder(Graph<V> graph, V curr, Set<V> visited, List<V> result) {
+        // check to make sure it isn't visited twice
+        if(visited.contains(curr)) {
+            return;
+        }
+        // mark visited
+        visited.add(curr);
+        // call all the neighbors
+        for(Edge<V> e : graph.neighbors(curr)) {
+            V to = e.to;
+            dfsPostOrder(graph, to, visited, result);
+        }
+        // record the post-order
+        result.add(curr);
     }
 
     @Override

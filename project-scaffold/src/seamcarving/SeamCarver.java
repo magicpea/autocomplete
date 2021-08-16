@@ -58,7 +58,7 @@ public class SeamCarver {
     // HERE IS MAINE THE STATE
     public static void main(String[] args) throws IOException {
         EnergyFunction f = new DualGradientEnergyFunction();
-        SeamFinder seamFinder = new AdjacencyListSeamFinder(ToposortDAGSolver::new);
+        SeamFinder seamFinder = new GenerativeSeamFinder(ToposortDAGSolver::new);
         SeamCarver seamCarver = new SeamCarver(new File(INPUT_PATH), f, seamFinder);
         System.out.println(seamCarver.removeVertical());
         seamCarver.picture().save(new File(OUTPUT_PATH));
