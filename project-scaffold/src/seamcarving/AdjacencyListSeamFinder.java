@@ -112,7 +112,6 @@ public class AdjacencyListSeamFinder implements SeamFinder {
                         if (0 <= z && z < picture.height()) {
                             Pixel to = pixels[x + 1][z];
                             from.neighbors.add(new Edge<>(from, to, f.apply(picture, x + 1, z)));
-                            System.out.println("Neighbors : " + from.neighbors);
                         }
                     }
                 }
